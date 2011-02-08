@@ -1,6 +1,5 @@
 using C5;
 using Gdk;
-using MfGames.Utility;
 using System.IO;
 
 namespace MfGames.Sprite
@@ -19,7 +18,6 @@ namespace MfGames.Sprite
 	/// no effort to reduce its memory footprint.
 	/// </summary>
 	public class PixbufCache
-	: Logable
 	{
 #region Singleton
 		// Contains the static singleton instance

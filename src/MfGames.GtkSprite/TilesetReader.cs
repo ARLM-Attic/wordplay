@@ -1,4 +1,3 @@
-using MfGames.Utility;
 using System;
 using System.IO;
 using System.Xml;
@@ -10,7 +9,6 @@ namespace MfGames.Sprite
 	/// XmlTextReader and generates a Tileset from the results.
 	/// </summary>
 	public class TilesetReader
-	: Logable
 	{
 		/// <summary>
 		/// Reads a tileset from the stream and returns the result.

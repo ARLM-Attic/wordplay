@@ -1,5 +1,4 @@
 using C5;
-using MfGames.Utility;
 
 namespace MfGames.Sprite
 {

@@ -1,5 +1,4 @@
 using C5;
-using MfGames.Utility;
 using System.IO;
 using System.Xml;
 
@@ -20,7 +19,6 @@ namespace MfGames.Sprite
 	/// actually create the drawable and load it into memory.
 	/// </summary>
 	public class TilesetDrawableFactory
-	: Logable
 	{
 #region Creation
 		/// <summary>

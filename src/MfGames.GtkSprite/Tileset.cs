@@ -1,5 +1,4 @@
 using C5;
-using MfGames.Utility;
 
 namespace MfGames.Sprite
 {
@@ -9,7 +8,6 @@ namespace MfGames.Sprite
 	/// tileset-scoped data.
 	/// </summary>
 	public class Tileset
-	: Logable
 	{
 		private LinkedList <Tile> tiles = new LinkedList <Tile> ();
 

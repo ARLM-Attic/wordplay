@@ -1,5 +1,4 @@
 using Gdk;
-using MfGames.Utility;
 
 namespace MfGames.Sprite
 {
@@ -9,7 +8,7 @@ namespace MfGames.Sprite
 	/// without changing those classes.
 	/// </summary>
 	public class ProxySprite
-	: Logable, ISprite
+	: ISprite
 	{
 		protected ISprite sprite;
 

@@ -1,5 +1,4 @@
 using Gdk;
-using MfGames.Utility;
 
 namespace MfGames.Sprite
 {
@@ -8,7 +7,7 @@ namespace MfGames.Sprite
 	/// basic functionality of a sprite.
 	/// </summary>
 	public abstract class SpriteBase
-	: Logable, ISprite
+	: ISprite
 	{
 		/// <summary>
 		/// Compares a sprite to another sprite.

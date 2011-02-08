@@ -1,5 +1,4 @@
 using Gdk;
-using MfGames.Utility;
 using System;
 using System.IO;
 
@@ -11,7 +10,7 @@ namespace MfGames.Sprite
 	/// rendering code.
 	/// </summary>
 	public class PixbufDrawable
-	: Logable, IDrawable
+	: IDrawable
 	{
 		protected FileInfo file;
 

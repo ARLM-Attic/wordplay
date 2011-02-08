@@ -1,5 +1,4 @@
 using Gdk;
-using MfGames.Utility;
 
 namespace MfGames.Sprite
 {
@@ -11,7 +10,6 @@ namespace MfGames.Sprite
 	/// operations from window coordinates into sprite coordinates.
 	/// </summary>
 	public class SpriteViewport
-	: Logable
 	{
 		/// <summary>
 		/// Constructs a viewport with no sprites.

@@ -1,5 +1,4 @@
 using C5;
-using MfGames.Utility;
 using System.IO;
 
 namespace MfGames.Sprite
@@ -19,7 +18,6 @@ namespace MfGames.Sprite
 	/// This factory only creates static drawables.
 	/// </summary>
 	public class PixbufDrawableFactory
-	: Logable
 	{
 #region Creation
 		/// <summary>

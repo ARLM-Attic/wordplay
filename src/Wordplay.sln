@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wordplay", "Wordplay\Wordplay.csproj", "{987800AF-2F05-42E4-92AC-7085835E4A62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MfGames.GtkSprite", "MfGames.GtkSprite\MfGames.GtkSprite.csproj", "{F09F468B-37DD-4CE0-9895-C5FFD731A004}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{987800AF-2F05-42E4-92AC-7085835E4A62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{987800AF-2F05-42E4-92AC-7085835E4A62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{987800AF-2F05-42E4-92AC-7085835E4A62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{987800AF-2F05-42E4-92AC-7085835E4A62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F09F468B-37DD-4CE0-9895-C5FFD731A004}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F09F468B-37DD-4CE0-9895-C5FFD731A004}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F09F468B-37DD-4CE0-9895-C5FFD731A004}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F09F468B-37DD-4CE0-9895-C5FFD731A004}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

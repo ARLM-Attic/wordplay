@@ -1,5 +1,4 @@
 using Gdk;
-using MfGames.Utility;
 using System;
 
 namespace MfGames.Sprite
@@ -11,7 +10,7 @@ namespace MfGames.Sprite
 	/// the fragmenting and isolation of the data.
 	/// </summary>
 	public class TileDrawable
-	: Logable, IDrawable
+	: IDrawable
 	{
 		/// <summary>
 		/// Constructs the tile drawable object.
