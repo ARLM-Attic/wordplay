@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Set up our library paths
+export MONO_PATH=libs:$MONO_PATH
+export DYLD_LIBRARY_PATH=libs:$DYLD_LIBRARY_PATH
+export LD_LIBRARY_PATH=libs:$LD_LIBRARY_PATH
+
+# Execute it
+exec mono --debug build/mfgames-wordplay.exe

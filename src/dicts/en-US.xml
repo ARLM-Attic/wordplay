@@ -1,0 +1,36 @@
+<language>
+  <!--
+      United States Letter Frequences
+      http://www.csm.astate.edu/%7Erossa/datasec/frequency.html
+      
+      US Point Values
+      http://en.wikipedia.org/wiki/Scrabble_letter_values
+  -->
+
+  <letter value='A' freq='816'  score='1' />
+  <letter value='B' freq='149'  score='3' />
+  <letter value='C' freq='278'  score='3' />
+  <letter value='D' freq='425'  score='2' />
+  <letter value='E' freq='1270' score='1' />
+  <letter value='F' freq='222'  score='4' />
+  <letter value='G' freq='201'  score='2' />
+  <letter value='H' freq='609'  score='4' />
+  <letter value='I' freq='699'  score='1' />
+  <letter value='J' freq='15'   score='8' />
+  <letter value='K' freq='77'   score='5' />
+  <letter value='L' freq='402'  score='1' />
+  <letter value='M' freq='240'  score='3' />
+  <letter value='N' freq='674'  score='1' />
+  <letter value='O' freq='750'  score='1' />
+  <letter value='P' freq='192'  score='3' />
+  <letter value='Q' freq='9'    score='10'/>
+  <letter value='R' freq='598'  score='1' />
+  <letter value='S' freq='632'  score='1' />
+  <letter value='T' freq='905'  score='1' />
+  <letter value='U' freq='275'  score='1' />
+  <letter value='V' freq='97'   score='4' />
+  <letter value='W' freq='236'  score='4' />
+  <letter value='X' freq='15'   score='8' />
+  <letter value='Y' freq='119'  score='4' />
+  <letter value='Z' freq='7'    score='10'/>
+</language>

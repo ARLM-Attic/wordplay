@@ -1,0 +1,113 @@
+<tileset>
+  <!-- Splash Screens -->
+  <tile id="game-over" file="game-over.svg"/>
+
+  <!-- Selection Animation -->
+  <tile id="selected" file="selected.svg"/>
+
+  <!-- A "normal" tile -->
+  <tile id="normal" file="normal.svg"/>
+
+  <!-- Burning Tiles -->
+  <tile id="burning" file="burning.svg"
+	columns="2" count="9" delay-ms="100">
+    <frame sequence="0" random="true" next-frame="0"/>
+    <frame sequence="1" random="false"/>
+    <frame sequence="2" random="false"/>
+    <frame sequence="3" random="false"/>
+    <frame sequence="4" random="false"/>
+    <frame sequence="5" random="false"/>
+    <frame sequence="6" random="false"/>
+    <frame sequence="7" random="false"/>
+    <frame sequence="8" random="false"/>
+  </tile>
+
+  <tile id="burnt" file="burning.svg" columns="2" count="9"
+	delay-ms="50"> 
+    <!-- These last five are used for the "going" away animation" -->
+    <frame sequence="4" random='false' next-frame='8'/>
+    <frame sequence="5" random='false' next-frame='8'/>
+    <frame sequence="6" random='false' next-frame='8'/>
+    <frame sequence="7" random='false' next-frame='8'/>
+    <frame sequence="8" random='false' next-frame="8"/>
+  </tile>
+
+  <!-- Flooded Tiles -->
+  <tile id="flooded" file="flooded.svg"
+	columns="2" count="8"
+	delay-ms="400">
+    <!-- This is the last frame of the "normal" sequence -->
+    <frame sequence="0" next-frame="0"/>
+    <frame sequence="1" random='false'/>
+    <frame sequence="2" random='false'/>
+    <frame sequence="3" random='false'/>
+
+    <!-- This is the filling sequence -->
+    <frame sequence="4" random='false'/>
+    <frame sequence="5" random='false'/>
+    <frame sequence="6" random='false'/>
+    <frame sequence="7" random='false' next-frame="0"/>
+  </tile>
+
+  <!-- Poisoned Tiles -->
+  <tile id="poisoned" file="poisoned.svg"/>
+
+  <!-- Contagious or Plague Tiles -->
+  <tile id="contagious" file="contagious.svg"/>
+
+  <!-- Copper Bonus Point Tiles -->
+  <tile id="copper" file="copper.svg" columns="2" count="4"
+	delay-ms="50">
+    <frame sequence="0" delay-ms="1500" next-frame='0'/>
+    <frame sequence='1' random='false'/>
+    <frame sequence='2' random='false'/>
+    <frame sequence='3' random='false'/>
+  </tile>
+
+  <!-- Silver Bonus Point Tiles -->
+  <tile id="silver" file="silver.svg" columns="2" count="4"
+	delay-ms="50">
+    <frame sequence="0" delay-ms="1500" next-frame='0'/>
+    <frame sequence='1' random='false'/>
+    <frame sequence='2' random='false'/>
+    <frame sequence='3' random='false'/>
+  </tile>
+
+  <!-- Gold Bonus Point Tiles -->
+  <tile id="gold" file="gold.svg" columns="2" count="4"
+	delay-ms="50">
+    <frame sequence="0" delay-ms="1500" next-frame='0'/>
+    <frame sequence='1' random='false'/>
+    <frame sequence='2' random='false'/>
+    <frame sequence='3' random='false'/>
+  </tile>
+
+  <!-- The various character tiles -->
+  <tile id="character-0020" file="character-0020.svg"/>
+  <tile id="character-0041" file="character-0041.svg"/>
+  <tile id="character-0042" file="character-0042.svg"/>
+  <tile id="character-0043" file="character-0043.svg"/>
+  <tile id="character-0044" file="character-0044.svg"/>
+  <tile id="character-0045" file="character-0045.svg"/>
+  <tile id="character-0046" file="character-0046.svg"/>
+  <tile id="character-0047" file="character-0047.svg"/>
+  <tile id="character-0048" file="character-0048.svg"/>
+  <tile id="character-0049" file="character-0049.svg"/>
+  <tile id="character-004a" file="character-004a.svg"/>
+  <tile id="character-004b" file="character-004b.svg"/>
+  <tile id="character-004c" file="character-004c.svg"/>
+  <tile id="character-004d" file="character-004d.svg"/>
+  <tile id="character-004e" file="character-004e.svg"/>
+  <tile id="character-004f" file="character-004f.svg"/>
+  <tile id="character-0050" file="character-0050.svg"/>
+  <tile id="character-0051" file="character-0051.svg"/>
+  <tile id="character-0052" file="character-0052.svg"/>
+  <tile id="character-0053" file="character-0053.svg"/>
+  <tile id="character-0054" file="character-0054.svg"/>
+  <tile id="character-0055" file="character-0055.svg"/>
+  <tile id="character-0056" file="character-0056.svg"/>
+  <tile id="character-0057" file="character-0057.svg"/>
+  <tile id="character-0058" file="character-0058.svg"/>
+  <tile id="character-0059" file="character-0059.svg"/>
+  <tile id="character-005a" file="character-005a.svg"/>
+</tileset>
