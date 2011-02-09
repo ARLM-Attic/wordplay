@@ -1,1 +1,5 @@
+C:\Documents and Settings\Dylan\My Documents\MfGames\wordplay\bin\MfGames.GtkSprite.dll
+C:\Documents and Settings\Dylan\My Documents\MfGames\wordplay\bin\MfGames.GtkSprite.pdb
 C:\Documents and Settings\Dylan\My Documents\MfGames\wordplay\src\MfGames.GtkSprite\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Dylan\My Documents\MfGames\wordplay\src\MfGames.GtkSprite\obj\Debug\MfGames.GtkSprite.dll
+C:\Documents and Settings\Dylan\My Documents\MfGames\wordplay\src\MfGames.GtkSprite\obj\Debug\MfGames.GtkSprite.pdb

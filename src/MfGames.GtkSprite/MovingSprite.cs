@@ -1,4 +1,32 @@
+#region Copyright and License
+
+// Copyright (c) 2009-2011, Moonfire Games
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
+#endregion
+
+#region Namespaces
+
 using System;
+
+#endregion
 
 namespace MfGames.Sprite
 {
@@ -6,11 +34,10 @@ namespace MfGames.Sprite
 	/// A sprite that has a desired location that it moves toward at a
 	/// given rate.
 	/// </summary>
-	public class MovingSprite
-	: ProxySprite
+	public class MovingSprite : ProxySprite
 	{
-		private long lastUpdateX = 0;
-		private long lastUpdateY = 0;
+		private long lastUpdateX;
+		private long lastUpdateY;
 
 		/// <summary>
 		/// Constructs the moving sprite with another sprite.
@@ -46,13 +73,19 @@ namespace MfGames.Sprite
 					if (dx < X)
 					{
 						X -= cx;
-						if (dx > X) X = dx;
+						if (dx > X)
+						{
+							X = dx;
+						}
 					}
 
 					if (dx > X)
 					{
 						X += cx;
-						if (dx < X) X = dx;
+						if (dx < X)
+						{
+							X = dx;
+						}
 					}
 
 					// Save our update
@@ -65,13 +98,19 @@ namespace MfGames.Sprite
 					if (dy < Y)
 					{
 						Y -= cy;
-						if (dy > Y) Y = dy;
+						if (dy > Y)
+						{
+							Y = dy;
+						}
 					}
 
 					if (dy > Y)
 					{
 						Y += cy;
-						if (dy < Y) Y = dy;
+						if (dy < Y)
+						{
+							Y = dy;
+						}
 					}
 
 					// Save our update
@@ -83,14 +122,17 @@ namespace MfGames.Sprite
 
 				// See if we stopped moving
 				if (!IsMoving)
+				{
 					FireStoppedMoving();
+				}
 			}
 
 			// Call the parent
 			base.Update();
 		}
 
-#region Properties
+		#region Properties
+
 		private int dx, dy;
 		private double rx, ry;
 
@@ -100,7 +142,11 @@ namespace MfGames.Sprite
 		public int DesiredX
 		{
 			get { return dx; }
-			set { dx = value; lastUpdateX = DateTime.UtcNow.Ticks; }
+			set
+			{
+				dx = value;
+				lastUpdateX = DateTime.UtcNow.Ticks;
+			}
 		}
 
 		/// <summary>
@@ -109,7 +155,11 @@ namespace MfGames.Sprite
 		public int DesiredY
 		{
 			get { return dy; }
-			set { dy = value; lastUpdateY = DateTime.UtcNow.Ticks; }
+			set
+			{
+				dy = value;
+				lastUpdateY = DateTime.UtcNow.Ticks;
+			}
 		}
 
 		/// <summary>
@@ -140,10 +190,10 @@ namespace MfGames.Sprite
 			get { return ry; }
 			set { ry = value; }
 		}
-#endregion
 
-#region Events
-		public event EventHandler StoppedMoving;
+		#endregion
+
+		#region Events
 
 		/// <summary>
 		/// Fires a "not moving" event.
@@ -151,8 +201,13 @@ namespace MfGames.Sprite
 		private void FireStoppedMoving()
 		{
 			if (StoppedMoving != null)
+			{
 				StoppedMoving(this, new EventArgs());
+			}
 		}
-#endregion
+
+		public event EventHandler StoppedMoving;
+
+		#endregion
 	}
 }

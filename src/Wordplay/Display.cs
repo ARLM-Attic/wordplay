@@ -1,24 +1,59 @@
-using C5;
-using Gdk;
-using Gtk;
-using MfGames.Sprite;
+#region Copyright and License
+
+// Copyright (c) 2009-2011, Moonfire Games
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
+#endregion
+
+#region Namespaces
+
 using System;
+
+using C5;
+
+using Gdk;
+
+using Gtk;
+
+using MfGames.Sprite;
+
+using GC=Gdk.GC;
+using Timeout=GLib.Timeout;
+using Window=Gdk.Window;
+
+#endregion
 
 namespace MfGames.Wordplay
 {
 	/// <summary>
 	/// Encapsulates the display and rendering of the board.
 	/// </summary>
-	public class Display
-	: DrawingArea
+	public class Display : DrawingArea
 	{
-		private SpriteViewport viewport;
-		private Pixmap pixmap;
+		private readonly SpriteList sprites;
+		private readonly SpriteViewport viewport;
 		private int exposeCount;
-		private int tickCount;
+		private Pixmap pixmap;
+		private bool sortNext;
 		private long start;
-		private bool sortNext = false;
-		private SpriteList sprites;
+		private int tickCount;
 
 		/// <summary>
 		/// Constructs the display and sets up the internal widgets.
@@ -27,8 +62,8 @@ namespace MfGames.Wordplay
 		{
 			// Set up our size
 			tileSize = 72;
-			SetSizeRequest(tileSize * Game.Config.BoardSize,
-				tileSize * Game.Config.BoardSize);
+			SetSizeRequest(
+				tileSize * Game.Config.BoardSize, tileSize * Game.Config.BoardSize);
 
 			// Create our viewport
 			sprites = new SpriteList();
@@ -41,10 +76,11 @@ namespace MfGames.Wordplay
 			Events = EventMask.AllEventsMask;
 
 			// Set up the animation timer
-			GLib.Timeout.Add(1000 / Game.Config.FramesPerSecond, OnTick);
+			Timeout.Add(1000 / Game.Config.FramesPerSecond, OnTick);
 		}
 
-#region Board Events
+		#region Board Events
+
 		/// <summary>
 		/// Gets a token sprite for a given token, or returns null if
 		/// there is one.
@@ -61,7 +97,9 @@ namespace MfGames.Wordplay
 					TokenSprite ts = ms.TokenSprite;
 
 					if (ts != null && ts.Token == token)
+					{
 						return ms;
+					}
 				}
 			}
 
@@ -72,7 +110,9 @@ namespace MfGames.Wordplay
 		/// <summary>
 		/// Gets the first token sprite in the point.
 		/// </summary.
-		private TokenSprite GetTokenSprite(double dx, double dy)
+		private TokenSprite GetTokenSprite(
+			double dx,
+			double dy)
 		{
 			// Adjust for our offset
 			int x = (int) dx; //(int) dx - pixmapX;
@@ -83,13 +123,18 @@ namespace MfGames.Wordplay
 			{
 				// Don't bother if we aren't a moving one
 				ContainerSprite ms = sprite as ContainerSprite;
-				if (ms == null) continue;
+				if (ms == null)
+				{
+					continue;
+				}
 
 				TokenSprite ts = ms.TokenSprite;
 
 				// Check it
 				if (ts.Rectangle.Contains(x, y))
+				{
 					return ts;
+				}
 			}
 
 			// Can't find it
@@ -107,21 +152,27 @@ namespace MfGames.Wordplay
 			ContainerSprite ms = GetContainerSprite(token);
 
 			if (ms == null)
+			{
 				return null;
+			}
 			else
+			{
 				return ms.ProxiedSprite as TokenSprite;
+			}
 		}
 
 		/// <summary>
 		/// Triggered when a token is added to the board.
 		/// </summary>
-		public void OnTokenAdded(object sender, TokenArgs args)
+		public void OnTokenAdded(
+			object sender,
+			TokenArgs args)
 		{
 			// Create a new token
 			TokenSprite ts = new TokenSprite(this, args.Token);
 			ContainerSprite ms = new ContainerSprite(ts);
 			sprites.Add(ms);
-			
+
 			// Move the sprite over
 			ms.RateX = 100;
 			ms.RateY = 100;
@@ -131,8 +182,7 @@ namespace MfGames.Wordplay
 
 			// Check the state
 			if (Game.State == GameState.InProgress &&
-				args.Token.Type == TokenType.Flooded &&
-				args.Token.Value == ' ')
+			    args.Token.Type == TokenType.Flooded && args.Token.Value == ' ')
 			{
 				// Flooded tokens show up in place, but with a special
 				// animation
@@ -144,14 +194,16 @@ namespace MfGames.Wordplay
 			// We need to sort the list again
 			sortNext = true;
 			QueueDraw();
-			log.Debug("TokenAdded: {0} sprits {1} state {2}",
-				ts, sprites.Count, Game.State);
+			log.Debug(
+				"TokenAdded: {0} sprits {1} state {2}", ts, sprites.Count, Game.State);
 		}
 
 		/// <summary>
 		/// Triggered when a token is changed on the board.
 		/// </summary>
-		public void OnTokenChanged(object sender, TokenArgs args)
+		public void OnTokenChanged(
+			object sender,
+			TokenArgs args)
 		{
 			// Remove the old one
 			TokenSprite ts = GetTokenSprite(args.Token);
@@ -161,7 +213,9 @@ namespace MfGames.Wordplay
 		/// <summary>
 		/// Triggered when a token is removed from the board.
 		/// </summary>
-		public void OnTokenRemoved(object sender, TokenArgs args)
+		public void OnTokenRemoved(
+			object sender,
+			TokenArgs args)
 		{
 			// Check to see if the token above is burning
 			Token token = args.Token;
@@ -182,12 +236,13 @@ namespace MfGames.Wordplay
 
 			// Redraw the entire screen
 			QueueDraw();
-			log.Debug("TokenRemoved: {0} count {1}", args.Token,
-				sprites.Count);
+			log.Debug("TokenRemoved: {0} count {1}", args.Token, sprites.Count);
 		}
-#endregion
 
-#region Display
+		#endregion
+
+		#region Display
+
 		private int tileSize;
 
 		/// <summary>
@@ -202,7 +257,9 @@ namespace MfGames.Wordplay
 					ContainerSprite ms = sprite as ContainerSprite;
 
 					if (ms != null && ms.IsMoving)
+					{
 						return true;
+					}
 				}
 
 				return false;
@@ -212,12 +269,18 @@ namespace MfGames.Wordplay
 		/// <summary>
 		/// Contains the sprites.
 		/// </summary>
-		public SpriteList Sprites { get { return sprites; } }
+		public SpriteList Sprites
+		{
+			get { return sprites; }
+		}
 
 		/// <summary>
 		/// Contains the current height of all the tiles.
 		/// </summary>
-		public int TileSize { get { return tileSize; } }
+		public int TileSize
+		{
+			get { return tileSize; }
+		}
 
 		/// <summary>
 		/// Adds the game over screen sprites.
@@ -225,8 +288,7 @@ namespace MfGames.Wordplay
 		private void AddGameOver()
 		{
 			// TODO should be a sprite scene builder
-			IDrawable drawable =
-				Game.Theme.DrawableFactory.Create("game-over");
+			IDrawable drawable = Game.Theme.DrawableFactory.Create("game-over");
 			DrawableSprite ds = new DrawableSprite(drawable);
 			ds.X = ds.Y = 0;
 			ds.Width = viewport.Width;
@@ -254,26 +316,32 @@ namespace MfGames.Wordplay
 			HighScoreWindow hsw = new HighScoreWindow();
 			hsw.ShowAll();
 		}
-#endregion
 
-#region GUI Events
+		#endregion
+
+		#region GUI Events
+
 		// Contains the last state
 		private GameState lastState = GameState.Unknown;
 
 		/// <summary>
 		/// Triggered when the button is pressed.
 		/// </summary>
-		private void OnButtonPress(object sender, ButtonPressEventArgs args)
+		private void OnButtonPress(
+			object sender,
+			ButtonPressEventArgs args)
 		{
 			// Ignore if we are in the wrong state
 			if (Game.State != GameState.InProgress || IsMoving)
+			{
 				return;
+			}
 
 			// Force a redraw
 			QueueDraw();
 
 			// Get the token at that point
-			Gdk.EventButton ev = args.Event;
+			EventButton ev = args.Event;
 			TokenSprite ts = GetTokenSprite(ev.X, ev.Y);
 
 			if (ts == null)
@@ -312,11 +380,13 @@ namespace MfGames.Wordplay
 		/// <summary>
 		/// Triggered when the drawing area is configured.
 		/// </summary>
-		private void OnConfigure(object obj, ConfigureEventArgs args)
+		private void OnConfigure(
+			object obj,
+			ConfigureEventArgs args)
 		{
 			// Pull out some fields and figure out the sizes
 			EventConfigure ev = args.Event;
-			Gdk.Window window = ev.Window;
+			Window window = ev.Window;
 			int width = Allocation.Width;
 			int height = Allocation.Height;
 			int min = Math.Min(width, height);
@@ -340,8 +410,7 @@ namespace MfGames.Wordplay
 				if (cs != null)
 				{
 					cs.FireInvalidate();
-					cs.X = cs.TokenSprite.X =
-						tileSize * cs.TokenSprite.Token.Column;
+					cs.X = cs.TokenSprite.X = tileSize * cs.TokenSprite.Token.Column;
 					cs.FireInvalidate();
 				}
 			}
@@ -354,7 +423,9 @@ namespace MfGames.Wordplay
 		/// <summary>
 		/// Triggered when the drawing area is exposed.
 		/// </summary>
-		private void OnExposed(object sender, ExposeEventArgs args)
+		private void OnExposed(
+			object sender,
+			ExposeEventArgs args)
 		{
 			// Check for a sort
 			if (sortNext)
@@ -365,23 +436,27 @@ namespace MfGames.Wordplay
 
 			// Clear out the entire graphics area with black (just
 			// because we can). This also erases the prior rendering.
-			Gdk.Rectangle region = args.Event.Area;
-			Gdk.GC gc = new Gdk.GC(pixmap);
+			Rectangle region = args.Event.Area;
+			GC gc = new GC(pixmap);
 			gc.ClipRectangle = region;
-			
+
 			// Render ourselves
 			viewport.Render(pixmap, region);
-			
+
 			// This performs the actual drawing
-			args.Event.Window.DrawDrawable(Style.BlackGC,
+			args.Event.Window.DrawDrawable(
+				Style.BlackGC,
 				pixmap,
-				region.X, region.Y,
-				region.X, region.Y,
-				region.Width, region.Height);
+				region.X,
+				region.Y,
+				region.X,
+				region.Y,
+				region.Width,
+				region.Height);
 			args.RetVal = false;
 			exposeCount++;
 		}
-		
+
 		/// <summary>
 		/// Triggered on the animation loop.
 		/// </summary>
@@ -389,7 +464,9 @@ namespace MfGames.Wordplay
 		{
 			// Check state
 			if (Game.State == GameState.Started)
+			{
 				Game.State = GameState.InProgress;
+			}
 
 			if (lastState != Game.State)
 			{
@@ -411,46 +488,52 @@ namespace MfGames.Wordplay
 			sprites.Update();
 
 			// Remove any completed animations
-			LinkedList <BurntSprite> list = new LinkedList <BurntSprite> ();
+			LinkedList<BurntSprite> list = new LinkedList<BurntSprite>();
 
 			foreach (ISprite sprite in sprites)
 			{
 				BurntSprite bs = sprite as BurntSprite;
 
 				if (bs != null && bs.CanRemove)
+				{
 					list.Add(bs);
+				}
 			}
 
 			foreach (BurntSprite bs in list)
+			{
 				sprites.Remove(bs);
+			}
 
 			// Render the pane
 			viewport.FireQueueDraw(this);
-			
+
 			// Handle the tick updating
 			tickCount++;
-			
+
 			if (tickCount % 100 == 0)
 			{
 				int fps = (int) Game.Config.FramesPerSecond;
 				double diff = (DateTime.UtcNow.Ticks - start) / 10000000.0;
-				double efps = (double) exposeCount / (double) diff;
-				double tfps = (double) tickCount / (double) diff;
-				System.Console.WriteLine
-					("FPS: Exposed {0:N1} FPS ({3:N1}%), "
-						+ "Ticks {1:N1} FPS ({4:N1}%), "
-						+ "Maximum {2:N0} FPS",
-						efps, tfps, fps,
-						efps * 100 / fps,
-						tfps * 100 / fps);
+				double efps = exposeCount / diff;
+				double tfps = tickCount / diff;
+				Console.WriteLine(
+					"FPS: Exposed {0:N1} FPS ({3:N1}%), " + "Ticks {1:N1} FPS ({4:N1}%), " +
+					"Maximum {2:N0} FPS",
+					efps,
+					tfps,
+					fps,
+					efps * 100 / fps,
+					tfps * 100 / fps);
 				start = DateTime.UtcNow.Ticks;
 				exposeCount = tickCount = 0;
 			}
-			
+
 			// Re-request the animation
-			GLib.Timeout.Add(1000 / Game.Config.FramesPerSecond, OnTick);
+			Timeout.Add(1000 / Game.Config.FramesPerSecond, OnTick);
 			return false;
 		}
-#endregion
+
+		#endregion
 	}
 }

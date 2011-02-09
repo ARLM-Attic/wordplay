@@ -1,18 +1,45 @@
-using System;
+#region Copyright and License
+
+// Copyright (c) 2009-2011, Moonfire Games
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
+#endregion
+
+#region Namespaces
 
 using Gdk;
+
 using Gtk;
+
 using MfGames.Sprite;
+
+#endregion
 
 /// <summary>
 /// A bounce demostration sprite pane that just shows various elements
 /// in random assortments.
 /// </summary>
-public class DemoSpriteBounce
-: DemoSpritePane
+public class DemoSpriteBounce : DemoSpritePane
 {
-	private SpriteList sprites;
 	private static SpriteViewport viewport;
+	private readonly SpriteList sprites;
 
 	/// <summary>
 	/// Constructs the pane with all the sprites.
@@ -39,12 +66,17 @@ public class DemoSpriteBounce
 	/// <summary>
 	/// Contains the name of the pane (for the drop-down list).
 	/// </summary>
-	public override string Name { get { return "Bounce"; } }
+	public override string Name
+	{
+		get { return "Bounce"; }
+	}
 
 	/// <summary>
 	/// Called when the size of the widget is changed.
 	/// </summary>
-	public override void Configure(int width, int height)
+	public override void Configure(
+		int width,
+		int height)
 	{
 		// Set our width and height
 		viewport.Width = width;
@@ -61,7 +93,9 @@ public class DemoSpriteBounce
 	/// <summary>
 	/// Called when the pane needs to be rendered.
 	/// </summary>
-	public override void Render(Drawable drawable, Rectangle region)
+	public override void Render(
+		Drawable drawable,
+		Rectangle region)
 	{
 		// Have the viewport render itself
 		viewport.Render(drawable, region);
@@ -70,7 +104,7 @@ public class DemoSpriteBounce
 	/// <summary>
 	/// Called when the pane needs to be updated in some manner.
 	/// </summary>
-	public override void Update(Gtk.Widget widget)
+	public override void Update(Widget widget)
 	{
 		// We use the built-in updating
 		sprites.Update();
@@ -79,13 +113,15 @@ public class DemoSpriteBounce
 		viewport.FireQueueDraw(widget);
 	}
 
+	#region Nested type: Bounce
+
 	/// <summary>
 	/// Internal class to handle a bouncing sprite.
 	/// </summary>
-	private class Bounce
-		: DrawableSprite
+	private class Bounce : DrawableSprite
 	{
-		int dx, dy, count;
+		private int count;
+		private int dx, dy;
 
 		/// <summary>
 		/// Creates the bounce widget.
@@ -169,4 +205,6 @@ public class DemoSpriteBounce
 			FireInvalidate();
 		}
 	}
+
+	#endregion
 }

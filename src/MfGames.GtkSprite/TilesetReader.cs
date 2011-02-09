@@ -1,6 +1,34 @@
+#region Copyright and License
+
+// Copyright (c) 2009-2011, Moonfire Games
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
+#endregion
+
+#region Namespaces
+
 using System;
 using System.IO;
 using System.Xml;
+
+#endregion
 
 namespace MfGames.Sprite
 {
@@ -13,7 +41,9 @@ namespace MfGames.Sprite
 		/// <summary>
 		/// Reads a tileset from the stream and returns the result.
 		/// </summary>
-		public Tileset Read(DirectoryInfo baseDir, XmlTextReader xtr)
+		public Tileset Read(
+			DirectoryInfo baseDir,
+			XmlTextReader xtr)
 		{
 			// Create an empty tileset
 			Tileset ts = new Tileset();
@@ -22,16 +52,19 @@ namespace MfGames.Sprite
 			while (xtr.Read())
 			{
 				// Check for stop
-				if (xtr.NodeType == XmlNodeType.EndElement &&
-					xtr.LocalName == "tileset")
+				if (xtr.NodeType == XmlNodeType.EndElement && xtr.LocalName == "tileset")
+				{
 					break;
+				}
 
 				// Check for new elements
 				if (xtr.NodeType == XmlNodeType.Element)
 				{
 					// Check the name
 					if (xtr.LocalName == "tile")
+					{
 						ts.Tiles.Add(ReadTile(baseDir, xtr));
+					}
 				}
 			}
 
@@ -42,7 +75,9 @@ namespace MfGames.Sprite
 		/// <summary>
 		/// Reads a single frame into memory.
 		/// </summary>
-		private void ReadFrame(Tile tile, XmlTextReader xtr)
+		private void ReadFrame(
+			Tile tile,
+			XmlTextReader xtr)
 		{
 			// Grab the sequence
 			int seq = Int32.Parse(xtr["sequence"]);
@@ -61,24 +96,34 @@ namespace MfGames.Sprite
 			try
 			{
 				frame.Delay = Int32.Parse(xtr["delay-ms"]);
-			} catch {}
+			}
+			catch
+			{
+			}
 
 			try
 			{
 				frame.NextFrame = Int32.Parse(xtr["next-frame"]);
-			} catch {}
+			}
+			catch
+			{
+			}
 
 			try
 			{
 				frame.Random = Boolean.Parse(xtr["random"]);
 			}
-			catch {}
+			catch
+			{
+			}
 		}
 
 		/// <summary>
 		/// Reads a single tile into memory.
 		/// </summary>
-		private Tile ReadTile(DirectoryInfo baseDir, XmlTextReader xtr)
+		private Tile ReadTile(
+			DirectoryInfo baseDir,
+			XmlTextReader xtr)
 		{
 			// Grab the attributes
 			Tile t = new Tile();
@@ -89,36 +134,50 @@ namespace MfGames.Sprite
 			try
 			{
 				t.Columns = t.Count = Int32.Parse(xtr["columns"]);
-			} catch {}
-			
+			}
+			catch
+			{
+			}
+
 			try
 			{
 				t.Count = Int32.Parse(xtr["count"]);
-			} catch {}
+			}
+			catch
+			{
+			}
 
 			try
 			{
 				t.Delay = Int32.Parse(xtr["delay-ms"]);
-			} catch {}
+			}
+			catch
+			{
+			}
 
 			// Check for empty
 			if (xtr.IsEmptyElement)
+			{
 				return t;
+			}
 
 			// Loop through the reader and load things
 			while (xtr.Read())
 			{
 				// Check for stop
-				if (xtr.NodeType == XmlNodeType.EndElement &&
-					xtr.LocalName == "tile")
+				if (xtr.NodeType == XmlNodeType.EndElement && xtr.LocalName == "tile")
+				{
 					break;
+				}
 
 				// Check for new elements
 				if (xtr.NodeType == XmlNodeType.Element)
 				{
 					// Check the name
 					if (xtr.LocalName == "frame")
+					{
 						ReadFrame(t, xtr);
+					}
 				}
 			}
 

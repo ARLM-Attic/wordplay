@@ -1,6 +1,35 @@
-using C5;
+#region Copyright and License
+
+// Copyright (c) 2009-2011, Moonfire Games
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
+#endregion
+
+#region Namespaces
+
 using System.IO;
 using System.Xml;
+
+using C5;
+
+#endregion
 
 namespace MfGames.Sprite
 {
@@ -20,7 +49,8 @@ namespace MfGames.Sprite
 	/// </summary>
 	public class TilesetDrawableFactory
 	{
-#region Creation
+		#region Creation
+
 		/// <summary>
 		/// Constructs a drawable object using the given key.
 		/// </summary>
@@ -48,12 +78,14 @@ namespace MfGames.Sprite
 			// Return the drawable
 			return drawable;
 		}
-#endregion
 
-#region Loading
+		#endregion
+
+		#region Loading
+
 		// Contains all of the tiles in memory
-		private HashDictionary <string, Tile> tiles =
-			new HashDictionary <string, Tile> ();
+		private readonly HashDictionary<string, Tile> tiles =
+			new HashDictionary<string, Tile>();
 
 		/// <summary>
 		/// Loads a tileset into memory and installs the tiles into
@@ -63,8 +95,9 @@ namespace MfGames.Sprite
 		{
 			// Make sure it exists
 			if (!file.Exists)
-				throw new SpriteException(
-					"Tileset " + file + " does not exist");
+			{
+				throw new SpriteException("Tileset " + file + " does not exist");
+			}
 
 			// Get the relative directory
 			DirectoryInfo baseDir = file.Directory;
@@ -79,8 +112,11 @@ namespace MfGames.Sprite
 
 			// Go through the tiles
 			foreach (Tile tile in tileset.Tiles)
+			{
 				tiles[tile.ID] = tile;
+			}
 		}
-#endregion
+
+		#endregion
 	}
 }

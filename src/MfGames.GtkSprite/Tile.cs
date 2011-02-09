@@ -1,5 +1,34 @@
-using C5;
+#region Copyright and License
+
+// Copyright (c) 2009-2011, Moonfire Games
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
+#endregion
+
+#region Namespaces
+
 using System.IO;
+
+using C5;
+
+#endregion
 
 namespace MfGames.Sprite
 {
@@ -9,13 +38,14 @@ namespace MfGames.Sprite
 	/// </summary>
 	public class Tile
 	{
-#region Properties
-		private string id;
-		private FileInfo file;
+		#region Properties
+
 		private int columns = 1;
-		private int count = 0;
+		private int count;
 		private int delay = 100;
-		private ArrayList <TileFrame> frames;
+		private FileInfo file;
+		private ArrayList<TileFrame> frames;
+		private string id;
 
 		/// <summary>
 		/// Constructs the tile.
@@ -24,7 +54,7 @@ namespace MfGames.Sprite
 		{
 			Count = 1;
 		}
-			
+
 		/// <summary>
 		/// Contains the number of columns in the file.
 		/// </summary>
@@ -34,8 +64,9 @@ namespace MfGames.Sprite
 			set
 			{
 				if (value <= 0)
-					throw new SpriteException(
-						"There need to be at least one column");
+				{
+					throw new SpriteException("There need to be at least one column");
+				}
 
 				columns = value;
 			}
@@ -53,15 +84,16 @@ namespace MfGames.Sprite
 			{
 				// Check for invalid numbers
 				if (value <= 0)
-					throw new SpriteException(
-						"There need to be at least one tile");
+				{
+					throw new SpriteException("There need to be at least one tile");
+				}
 
 				// Check for change. If it changed, then rebuild the
 				// internal list.
 				if (count != value)
 				{
 					// Create the frames
-					frames = new ArrayList <TileFrame> (value);
+					frames = new ArrayList<TileFrame>(value);
 
 					// Assign the frames and set defaults
 					for (int i = 0; i < value; i++)
@@ -101,8 +133,9 @@ namespace MfGames.Sprite
 			set
 			{
 				if (value == null)
-					throw new SpriteException(
-						"Cannot create a null file tile");
+				{
+					throw new SpriteException("Cannot create a null file tile");
+				}
 
 				file = value;
 			}
@@ -111,7 +144,7 @@ namespace MfGames.Sprite
 		/// <summary>
 		/// Contains an array list of frames.
 		/// </summary>
-		public ArrayList <TileFrame> Frames
+		public ArrayList<TileFrame> Frames
 		{
 			get { return frames; }
 		}
@@ -125,7 +158,9 @@ namespace MfGames.Sprite
 			set
 			{
 				if (value == null || value.Trim() == "")
+				{
 					throw new SpriteException("Cannot create null ID tile");
+				}
 
 				id = value;
 			}
@@ -136,11 +171,9 @@ namespace MfGames.Sprite
 		/// </summary>
 		public int Rows
 		{
-			get
-			{
-				return 1 + ((Count - 1) / Columns);
-			}
+			get { return 1 + ((Count - 1) / Columns); }
 		}
-#endregion
+
+		#endregion
 	}
 }

@@ -1,14 +1,41 @@
-using Gtk;
+#region Copyright and License
+
+// Copyright (c) 2009-2011, Moonfire Games
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
+#endregion
+
+#region Namespaces
+
 using System;
-using System.IO;
+
+using Gtk;
+
+#endregion
 
 namespace MfGames.Wordplay
 {
 	/// <summary>
 	/// Encapsulates the functionality of the game window.
 	/// </summary>
-	public class GameWindow
-	: Locale
+	public class GameWindow : Locale
 	{
 		/// <summary>
 		/// Constructs the game window. This actually sets up the
@@ -30,11 +57,14 @@ namespace MfGames.Wordplay
 			window.ShowAll();
 		}
 
-#region Events
+		#region Events
+
 		/// <summary>
 		/// Triggered when the chain changes.
 		/// </summary>
-		private void OnChainChanged(object sender, EventArgs args)
+		private void OnChainChanged(
+			object sender,
+			EventArgs args)
 		{
 			UpdateScore();
 		}
@@ -42,7 +72,9 @@ namespace MfGames.Wordplay
 		/// <summary>
 		/// Triggered when the high scores are requested.
 		/// </summary>
-		private void OnHighScoresAction(object sender, EventArgs args)
+		private void OnHighScoresAction(
+			object sender,
+			EventArgs args)
 		{
 			HighScoreWindow window = new HighScoreWindow();
 			window.ShowAll();
@@ -51,7 +83,9 @@ namespace MfGames.Wordplay
 		/// <summary>
 		/// Triggered by the new game menu item.
 		/// </summary>
-		private void OnNewGameAction(object sender, EventArgs args)
+		private void OnNewGameAction(
+			object sender,
+			EventArgs args)
 		{
 			Game.NewGame();
 			Game.Board.ChainChanged += OnChainChanged;
@@ -61,7 +95,9 @@ namespace MfGames.Wordplay
 		/// <summary>
 		/// Triggered when the preferences is requested.
 		/// </summary>
-		private void OnPreferencesAction(object sender, EventArgs args)
+		private void OnPreferencesAction(
+			object sender,
+			EventArgs args)
 		{
 			// Create the window
 			ConfigDialog dialog = new ConfigDialog();
@@ -70,9 +106,22 @@ namespace MfGames.Wordplay
 		}
 
 		/// <summary>
+		/// Triggered by the quit menu item.
+		/// </summary>
+		private void OnQuitAction(
+			object sender,
+			EventArgs args)
+		{
+			Game.WriteConfig();
+			Application.Quit();
+		}
+
+		/// <summary>
 		/// Shuffles the board.
 		/// </summary>
-		private void OnShuffleBoardAction(object sender, EventArgs args)
+		private void OnShuffleBoardAction(
+			object sender,
+			EventArgs args)
 		{
 			if (Game.State == GameState.InProgress)
 			{
@@ -84,40 +133,36 @@ namespace MfGames.Wordplay
 		/// <summary>
 		/// Submits the currently selected word as a score.
 		/// </summary>
-		private void OnSubmit(object sender, EventArgs args)
+		private void OnSubmit(
+			object sender,
+			EventArgs args)
 		{
 			Game.Board.ScoreChain();
 			Game.Display.QueueDraw();
 		}
 
 		/// <summary>
-		/// Triggered by the quit menu item.
-		/// </summary>
-		private void OnQuitAction(object sender, EventArgs args)
-		{
-			Game.WriteConfig();
-			Application.Quit();
-		}
-
-		/// <summary>
 		/// Triggered when the window is destroyed.
 		/// </summary>
-		private void OnWindowDestroyed(object sender, EventArgs args)
+		private void OnWindowDestroyed(
+			object sender,
+			EventArgs args)
 		{
 			OnQuitAction(sender, args);
 		}
-#endregion
 
-#region GUI Creation
-		private Window window;
-		private Display display;
+		#endregion
 
-		private Label totalScore;
+		#region GUI Creation
+
 		private Label currentWord;
-		private Label longestWord;
+		private Display display;
 		private Label highestWord;
-		private Label totalWords;
+		private Label longestWord;
 		private Button submit;
+		private Label totalScore;
+		private Label totalWords;
+		private Window window;
 
 		/// <summary>
 		/// Contains the display for this window.
@@ -154,7 +199,7 @@ namespace MfGames.Wordplay
 			hbox.PackStart(display, true, true, 0);
 
 			// Add the scoring pane
-			hbox.PackStart(CreateScorePane(), false, false, 2);			
+			hbox.PackStart(CreateScorePane(), false, false, 2);
 		}
 
 		/// <summary>
@@ -167,29 +212,52 @@ namespace MfGames.Wordplay
 			ui.AddUiFromResource("menu.xml");
 
 			// Set up the actions
-			ActionEntry [] entries = new ActionEntry [] {
-				// "File" Menu
-				new ActionEntry("GameMenu", null, Translate("Menu/Game"),
-					null, null, null),
-				new ActionEntry("NewGame", Stock.New,
-					Translate("Menu/NewGame"),
-					"<control>N", "New", new EventHandler(OnNewGameAction)),
-				new ActionEntry("ShuffleBoard", null,
-					Translate("Menu/ShuffleBoard"),
-					"<control>S", "Shuffle",
-					new EventHandler(OnShuffleBoardAction)),
-				new ActionEntry("Preferences", null,
-					Translate("Menu/Preferences"),
-					"<control>P", "Preferences",
-					new EventHandler(OnPreferencesAction)),
-				new ActionEntry("HighScores", null,
-					Translate("Menu/HighScores"),
-					"<control>H", "HighScores",
-					new EventHandler(OnHighScoresAction)),
-				new ActionEntry("Quit", Stock.Quit,
-					Translate("Menu/Quit"),
-					"<control>Q", "Quit", new EventHandler(OnQuitAction)),
-			};
+			ActionEntry[] entries = new[]
+			                        {
+			                        	// "File" Menu
+			                        	new ActionEntry(
+			                        		"GameMenu",
+			                        		null,
+			                        		Translate("Menu/Game"),
+			                        		null,
+			                        		null,
+			                        		null),
+			                        	new ActionEntry(
+			                        		"NewGame",
+			                        		Stock.New,
+			                        		Translate("Menu/NewGame"),
+			                        		"<control>N",
+			                        		"New",
+			                        		OnNewGameAction),
+			                        	new ActionEntry(
+			                        		"ShuffleBoard",
+			                        		null,
+			                        		Translate("Menu/ShuffleBoard"),
+			                        		"<control>S",
+			                        		"Shuffle",
+			                        		OnShuffleBoardAction),
+			                        	new ActionEntry(
+			                        		"Preferences",
+			                        		null,
+			                        		Translate("Menu/Preferences"),
+			                        		"<control>P",
+			                        		"Preferences",
+			                        		OnPreferencesAction),
+			                        	new ActionEntry(
+			                        		"HighScores",
+			                        		null,
+			                        		Translate("Menu/HighScores"),
+			                        		"<control>H",
+			                        		"HighScores",
+			                        		OnHighScoresAction),
+			                        	new ActionEntry(
+			                        		"Quit",
+			                        		Stock.Quit,
+			                        		Translate("Menu/Quit"),
+			                        		"<control>Q",
+			                        		"Quit",
+			                        		OnQuitAction),
+			                        };
 
 			// Install the actions
 			ActionGroup actions = new ActionGroup("group");
@@ -302,29 +370,37 @@ namespace MfGames.Wordplay
 				string sc = ((int) cs).ToString("N0");
 
 				if (cm != 1)
+				{
 					sc += "x" + cm;
+				}
 
 				// Valid word with score
 				submit.Sensitive = true;
-				currentWord.Text = String.Format("{0} ({1})",
-					text, sc);
+				currentWord.Text = String.Format("{0} ({1})", text, sc);
 			}
 
 			// See if we have a longest word
 			if (Game.Score.LongestWord != null)
+			{
 				longestWord.Text = Game.Score.LongestWord;
+			}
 			else
+			{
 				longestWord.Text = Translate("Score/None");
+			}
 
 			// See if we have a highest word
 			if (Game.Score.HighestWord != null)
-				highestWord.Text =
-					String.Format("{0} ({1})",
-						Game.Score.HighestWord,
-						Game.Score.HighestWordScore);
+			{
+				highestWord.Text = String.Format(
+					"{0} ({1})", Game.Score.HighestWord, Game.Score.HighestWordScore);
+			}
 			else
+			{
 				highestWord.Text = Translate("Score/None");
+			}
 		}
-#endregion
+
+		#endregion
 	}
 }

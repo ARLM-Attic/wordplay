@@ -1,6 +1,35 @@
-using C5;
+#region Copyright and License
+
+// Copyright (c) 2009-2011, Moonfire Games
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
+#endregion
+
+#region Namespaces
+
 using System;
 using System.Text;
+
+using C5;
+
+#endregion
 
 namespace MfGames.Wordplay
 {
@@ -19,15 +48,6 @@ namespace MfGames.Wordplay
 		}
 
 		/// <summary>
-		/// Initalizes the board.
-		/// </summary>
-		public void Initialize()
-		{
-			// Initialize the board
-			InitializeTokens();
-		}
-
-		/// <summary>
 		/// Does a sanity checking
 		/// </summary>
 		public bool CheckForErrors()
@@ -37,14 +57,16 @@ namespace MfGames.Wordplay
 
 			if (tokens.Count != Rows * Columns)
 			{
-				Error("Unexpected number of tokens: {0} instead of {1}",
-					tokens.Count, Rows * Columns);
+				Error(
+					"Unexpected number of tokens: {0} instead of {1}",
+					tokens.Count,
+					Rows * Columns);
 				errors = true;
 			}
-			
+
 			// Check for duplicates
-			HashSet <int> hash = new HashSet <int> ();
-			
+			HashSet<int> hash = new HashSet<int>();
+
 			foreach (Token token in tokens)
 			{
 				// Check for out of bounds
@@ -56,8 +78,7 @@ namespace MfGames.Wordplay
 
 				if (token.Column < 0)
 				{
-					Error("{0}: Column is below zero: {1}", 
-						token, token.Column);
+					Error("{0}: Column is below zero: {1}", token, token.Column);
 					errors = true;
 				}
 
@@ -69,20 +90,19 @@ namespace MfGames.Wordplay
 
 				if (token.Column >= Columns)
 				{
-					Error("{0}: Column is too high: {1}",
-						token, token.Column);
+					Error("{0}: Column is too high: {1}", token, token.Column);
 					errors = true;
 				}
-					
+
 				// Check for duplicate points
 				int ndx = token.Row * Rows + token.Column;
-				
+
 				if (hash.Contains(ndx))
 				{
 					Error("{0}: Duplicate location: {1}", token, ndx);
 					errors = true;
 				}
-				
+
 				hash.Add(ndx);
 			}
 
@@ -90,7 +110,17 @@ namespace MfGames.Wordplay
 			return errors;
 		}
 
-#region Board
+		/// <summary>
+		/// Initalizes the board.
+		/// </summary>
+		public void Initialize()
+		{
+			// Initialize the board
+			InitializeTokens();
+		}
+
+		#region Board
+
 		private int resetCount = 0;
 
 		/// <summary>
@@ -112,8 +142,7 @@ namespace MfGames.Wordplay
 
 				// Make sure this wouldn't put a burning tile on the
 				// bottom row. This will move burning tiles up, if needed.
-				if (t1.Type == TokenType.Burning && t1.Row == Rows -1 &&
-					t.Row == Rows -1)
+				if (t1.Type == TokenType.Burning && t1.Row == Rows - 1 && t.Row == Rows - 1)
 				{
 					continue;
 				}
@@ -142,8 +171,7 @@ namespace MfGames.Wordplay
 			for (int i = 0; i < resetCount; i++)
 			{
 				// Set to burning
-				Token nb = GetToken(Entropy.Next(0, Rows - 2),
-					Entropy.Next(0, Columns - 1));
+				Token nb = GetToken(Entropy.Next(0, Rows - 2), Entropy.Next(0, Columns - 1));
 				nb.Type = TokenType.Burning;
 				OnTokenChanged(nb);
 			}
@@ -184,7 +212,9 @@ namespace MfGames.Wordplay
 					Token token = GetToken(row, col);
 
 					if (token == null || token.Type != TokenType.Burning)
+					{
 						continue;
+					}
 
 					// The two possible conditions are, it is on the
 					// bottom and the game is over or it isn't on the
@@ -202,8 +232,7 @@ namespace MfGames.Wordplay
 
 						// To handle two burning tiles on top of each
 						// other, we just ignore blanks.
-						if (below == null ||
-							below.Type == TokenType.Burning)
+						if (below == null || below.Type == TokenType.Burning)
 						{
 							continue;
 						}
@@ -233,10 +262,12 @@ namespace MfGames.Wordplay
 			}
 
 			if (!hasFlooded)
+			{
 				return;
+			}
 
 			// Remove all the empty flooded tokens from the list
-			LinkedList <Token> toRem = new LinkedList <Token> ();
+			LinkedList<Token> toRem = new LinkedList<Token>();
 
 			foreach (Token token in tokens)
 			{
@@ -254,7 +285,7 @@ namespace MfGames.Wordplay
 			while (true)
 			{
 				// Keep going as long as we made at least one change
-				LinkedList <Token> toAdd = new LinkedList <Token> ();
+				LinkedList<Token> toAdd = new LinkedList<Token>();
 
 				for (int row = 0; row < Rows; row++)
 				{
@@ -264,21 +295,26 @@ namespace MfGames.Wordplay
 						Token token = GetToken(row, col);
 
 						if (token != null)
+						{
 							continue;
+						}
 
 						// This is a flooded candidate, so check the
 						// tokens next to this one
 						bool isFlooded = false;
 
 						foreach (Token next in GetTokensAdjacent(row, col))
+						{
 							if (next.Type == TokenType.Flooded)
+							{
 								isFlooded = true;
+							}
+						}
 
 						// Check for flooded
 						if (isFlooded)
 						{
-							token = 
-								new Token(TokenType.Flooded, ' ', row, col);
+							token = new Token(TokenType.Flooded, ' ', row, col);
 							toAdd.Add(token);
 						}
 					}
@@ -286,7 +322,9 @@ namespace MfGames.Wordplay
 
 				// If we didn't have any added tokens, stop processing
 				if (toAdd.Count == 0)
+				{
 					break;
+				}
 
 				// Add the tokens we want to add
 				foreach (Token t in toAdd)
@@ -312,7 +350,9 @@ namespace MfGames.Wordplay
 					Token token = GetToken(row, col);
 
 					if (token != null)
+					{
 						continue;
+					}
 
 					// If null, we are missing it so get the one
 					// above. If there are none above, then we are at
@@ -320,10 +360,12 @@ namespace MfGames.Wordplay
 					Token above = GetTokenAbove(row, col);
 
 					if (above == null)
+					{
 						continue;
+					}
 
 					Debug("Moving {0} to {1}", above, row);
-					
+
 					// Reset the position
 					above.Row = row;
 				}
@@ -353,17 +395,19 @@ namespace MfGames.Wordplay
 				}
 			}
 		}
-#endregion
 
-#region Chains
-		private LinkedList <Token> chain = new LinkedList <Token> ();
+		#endregion
+
+		#region Chains
+
+		private LinkedList<Token> chain = new LinkedList<Token>();
 
 		/// <summary>
 		/// Contains a read-only copy of the current chain.
 		/// </summary>
-		public IList <Token> CurrentChain
+		public IList<Token> CurrentChain
 		{
-			get { return new GuardedList <Token> (chain); }
+			get { return new GuardedList<Token>(chain); }
 		}
 
 		/// <summary>
@@ -400,7 +444,9 @@ namespace MfGames.Wordplay
 				StringBuilder builder = new StringBuilder();
 
 				foreach (Token token in chain)
+				{
 					builder.Append(token.Value);
+				}
 
 				return builder.ToString();
 			}
@@ -421,7 +467,7 @@ namespace MfGames.Wordplay
 					token.InChain = false;
 					return;
 				}
-				
+
 				// Check to see if there is anything in the chain already
 				if (chain.Count > 0)
 				{
@@ -429,12 +475,12 @@ namespace MfGames.Wordplay
 					// the current one
 					bool addRest = false;
 					bool containsToken = chain.Contains(token);
-					
-					ArrayList <Token> revChain = new ArrayList <Token> ();
+
+					ArrayList<Token> revChain = new ArrayList<Token>();
 					revChain.AddAll(chain);
 					revChain.Reverse();
-					LinkedList <Token> newChain = new LinkedList <Token> ();
-					
+					LinkedList<Token> newChain = new LinkedList<Token>();
+
 					foreach (Token test in revChain)
 					{
 						// Check for containing code
@@ -443,7 +489,7 @@ namespace MfGames.Wordplay
 							test.InChain = false;
 							continue;
 						}
-						
+
 						if (containsToken && test == token)
 						{
 							// Add the rest, but not this one because we
@@ -451,7 +497,7 @@ namespace MfGames.Wordplay
 							addRest = true;
 							continue;
 						}
-						
+
 						// Check for adjacent
 						if (!addRest && !test.IsAdjacent(token))
 						{
@@ -459,21 +505,23 @@ namespace MfGames.Wordplay
 							test.InChain = false;
 							continue;
 						}
-						
+
 						// Check for adjacent
 						if (test.IsAdjacent(token))
+						{
 							addRest = true;
-						
+						}
+
 						// Add the chain
 						test.InChain = true;
 						newChain.Add(test);
 					}
-					
+
 					// Reverse it again
 					newChain.Reverse();
 					chain = newChain;
 				}
-				
+
 				// At this point, we can append the token to the chain
 				chain.Add(token);
 				token.InChain = true;
@@ -492,7 +540,9 @@ namespace MfGames.Wordplay
 		{
 			// Check the score first
 			if (CurrentChainScore == null)
+			{
 				return false;
+			}
 
 			// Check that this is last
 			return token == chain.Last;
@@ -514,7 +564,7 @@ namespace MfGames.Wordplay
 				int len = CurrentChainText.Length;
 				Game.Score.CurrentScore += score;
 				Game.Score.TotalWords++;
-					
+
 				// Check the highest word
 				if (cs > Game.Score.HighestWordScore)
 				{
@@ -523,8 +573,7 @@ namespace MfGames.Wordplay
 				}
 
 				// Check the lengths
-				if (Game.Score.LongestWord == null ||
-					len > Game.Score.LongestWord.Length)
+				if (Game.Score.LongestWord == null || len > Game.Score.LongestWord.Length)
 				{
 					Game.Score.LongestWord = CurrentChainText;
 				}
@@ -532,7 +581,9 @@ namespace MfGames.Wordplay
 
 			// Go through it
 			foreach (Token token in chain)
+			{
 				RemoveToken(token, false);
+			}
 
 			chain.Clear();
 
@@ -542,13 +593,12 @@ namespace MfGames.Wordplay
 			// Finish up
 			OnChainChanged();
 		}
-#endregion
 
-#region Events
+		#endregion
+
+		#region Events
+
 		public event EventHandler ChainChanged;
-		public event TokenHandler TokenAdded;
-		public event TokenHandler TokenRemoved;
-		public event TokenHandler TokenChanged;
 
 		/// <summary>
 		/// This is the default operation for when the chain changed.
@@ -556,7 +606,9 @@ namespace MfGames.Wordplay
 		protected virtual void OnChainChanged()
 		{
 			if (ChainChanged != null)
+			{
 				ChainChanged(this, new EventArgs());
+			}
 		}
 
 		/// <summary>
@@ -565,7 +617,9 @@ namespace MfGames.Wordplay
 		protected virtual void OnTokenAdded(Token token)
 		{
 			if (TokenAdded != null)
+			{
 				TokenAdded(this, new TokenArgs(token));
+			}
 		}
 
 		/// <summary>
@@ -574,13 +628,17 @@ namespace MfGames.Wordplay
 		protected virtual void OnTokenChanged(Token token)
 		{
 			if (TokenChanged != null)
+			{
 				TokenChanged(this, new TokenArgs(token));
+			}
 		}
 
 		/// <summary>
 		/// This is the default operation for when a token is removed.
 		/// </summary>
-		protected virtual void OnTokenRemoved(Token token, bool burnt)
+		protected virtual void OnTokenRemoved(
+			Token token,
+			bool burnt)
 		{
 			// Build the arguments
 			TokenArgs args = new TokenArgs(token);
@@ -588,11 +646,19 @@ namespace MfGames.Wordplay
 
 			// Call it
 			if (TokenRemoved != null)
+			{
 				TokenRemoved(this, args);
+			}
 		}
-#endregion
 
-#region Properties
+		public event TokenHandler TokenAdded;
+		public event TokenHandler TokenChanged;
+		public event TokenHandler TokenRemoved;
+
+		#endregion
+
+		#region Properties
+
 		//private int rows;
 		//private int cols;
 		private int size;
@@ -616,23 +682,25 @@ namespace MfGames.Wordplay
 		/// <summary>
 		/// Contains the size of the board.
 		/// </summay>
-		public int Size 
+		public int Size
 		{
 			get { return size; }
 		}
-#endregion
 
-#region Tokens
-		private ArrayList <Token> tokens = null;
+		#endregion
+
+		#region Tokens
+
+		private ArrayList<Token> tokens = null;
 
 		/// <summary>
 		/// Contains a read-only list of tokens.
 		/// </summary>
-		public IList <Token> Tokens
+		public IList<Token> Tokens
 		{
 			get
 			{
-				GuardedList <Token> list = new GuardedList <Token> (tokens);
+				GuardedList<Token> list = new GuardedList<Token>(tokens);
 				return list;
 			}
 		}
@@ -640,12 +708,18 @@ namespace MfGames.Wordplay
 		/// <summary>
 		/// Gets the token at the given row and column.
 		/// </summary>
-		public Token GetToken(int row, int column)
+		public Token GetToken(
+			int row,
+			int column)
 		{
 			// Just loops through it
 			foreach (Token token in tokens)
+			{
 				if (token.Row == row && token.Column == column)
+				{
 					return token;
+				}
+			}
 
 			// Can't find it
 			return null;
@@ -654,7 +728,9 @@ namespace MfGames.Wordplay
 		/// <summary>
 		/// Returns the token above the given spot or none.
 		/// </summary>
-		private Token GetTokenAbove(int row, int column)
+		private Token GetTokenAbove(
+			int row,
+			int column)
 		{
 			// Go through it
 			while (row != 0)
@@ -663,7 +739,9 @@ namespace MfGames.Wordplay
 				Token token = GetToken(row, column);
 
 				if (token != null)
+				{
 					return token;
+				}
 			}
 
 			// Can't find it
@@ -674,9 +752,11 @@ namespace MfGames.Wordplay
 		/// Returns all the tokens next to or adjacent (on the cross
 		/// axis). This will never have a null in it.
 		/// </summary>
-		private IList <Token> GetTokensAdjacent(int row, int col)
+		private IList<Token> GetTokensAdjacent(
+			int row,
+			int col)
 		{
-			ArrayList <Token> list = new ArrayList <Token> (8);
+			ArrayList<Token> list = new ArrayList<Token>(8);
 
 			foreach (Token token in tokens)
 			{
@@ -687,9 +767,13 @@ namespace MfGames.Wordplay
 				dy = dy > 0 ? dy : -dy;
 
 				if (token.Row == row && dy == 1)
+				{
 					list.Add(token);
+				}
 				else if (token.Column == col && dx == 1)
+				{
 					list.Add(token);
+				}
 			}
 
 			// Return it
@@ -702,7 +786,7 @@ namespace MfGames.Wordplay
 		private void InitializeTokens()
 		{
 			// Fill in the initial values
-			tokens = new ArrayList <Token> (size * size);
+			tokens = new ArrayList<Token>(size * size);
 
 			for (int y = 0; y < size; y++)
 			{
@@ -720,12 +804,14 @@ namespace MfGames.Wordplay
 		/// <summary>
 		/// Removes a token from the board.
 		/// </summary>
-		private void RemoveToken(Token token, bool burnt)
+		private void RemoveToken(
+			Token token,
+			bool burnt)
 		{
 			tokens.Remove(token);
 			OnTokenRemoved(token, burnt);
 		}
-#endregion
 
+		#endregion
 	}
 }

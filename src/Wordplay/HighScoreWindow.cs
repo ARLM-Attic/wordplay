@@ -1,6 +1,36 @@
-using C5;
-using Gtk;
+#region Copyright and License
+
+// Copyright (c) 2009-2011, Moonfire Games
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
+#endregion
+
+#region Namespaces
+
 using System;
+
+using C5;
+
+using Gtk;
+
+#endregion
 
 namespace MfGames.Wordplay
 {
@@ -8,12 +38,11 @@ namespace MfGames.Wordplay
 	/// Displays the high score listings, for all high scores. This
 	/// tries to automatically select the current one.
 	/// </summary>
-	public class HighScoreWindow
-	: Window
+	public class HighScoreWindow : Window
 	{
-		private ArrayList <HighScoreWindowEntry> entries =
-			new ArrayList <HighScoreWindowEntry>
-			(HighScoreTable.MaximumEntries * 4);
+		private readonly ArrayList<HighScoreWindowEntry> entries =
+			new ArrayList<HighScoreWindowEntry>(HighScoreTable.MaximumEntries * 4);
+
 		private ComboBox tableList;
 
 		/// <summary>
@@ -39,12 +68,12 @@ namespace MfGames.Wordplay
 			// The top has the selection box and Close
 			HBox top = new HBox();
 			box.PackStart(top, false, false, 2);
-			
+
 			tableList = ComboBox.NewText();
 
 			Button close = new Button(Stock.Close);
 			close.Clicked += OnClose;
-			
+
 			top.PackStart(tableList, false, false, 2);
 			top.PackStart(new Label(), true, true, 0);
 			top.PackStart(close, false, false, 2);
@@ -55,26 +84,49 @@ namespace MfGames.Wordplay
 
 			outer.RowSpacing = 5;
 			outer.ColumnSpacing = 5;
-			outer.Attach(CreateScoreTable("Total Scores"),
-				0, 1, 0, 1,
+			outer.Attach(
+				CreateScoreTable("Total Scores"),
+				0,
+				1,
+				0,
+				1,
 				AttachOptions.Fill | AttachOptions.Expand,
 				AttachOptions.Fill | AttachOptions.Expand,
-				0, 0);
+				0,
+				0);
 
-			outer.Attach(CreateScoreTable("Total Words"),
-				1, 2, 0, 1,
-				AttachOptions.Fill, AttachOptions.Fill,
-				0, 0);
+			outer.Attach(
+				CreateScoreTable("Total Words"),
+				1,
+				2,
+				0,
+				1,
+				AttachOptions.Fill,
+				AttachOptions.Fill,
+				0,
+				0);
 
-			outer.Attach(CreateScoreTable("Longest Words"),
-				0, 1, 1, 2,
-				AttachOptions.Fill, AttachOptions.Fill,
-				0, 0);
+			outer.Attach(
+				CreateScoreTable("Longest Words"),
+				0,
+				1,
+				1,
+				2,
+				AttachOptions.Fill,
+				AttachOptions.Fill,
+				0,
+				0);
 
-			outer.Attach(CreateScoreTable("Highest Scoring Words"),
-				1, 2, 1, 2,
-				AttachOptions.Fill, AttachOptions.Fill,
-				0, 0);
+			outer.Attach(
+				CreateScoreTable("Highest Scoring Words"),
+				1,
+				2,
+				1,
+				2,
+				AttachOptions.Fill,
+				AttachOptions.Fill,
+				0,
+				0);
 
 			// Populate the list
 			if (Game.HighScores.Tables.Count == 0)
@@ -106,8 +158,7 @@ namespace MfGames.Wordplay
 			Frame frame = new Frame(title);
 
 			// Add the entries as needed
-			Table table =
-				new Table((uint) HighScoreTable.MaximumEntries, 4, false);
+			Table table = new Table((uint) HighScoreTable.MaximumEntries, 4, false);
 			table.ColumnSpacing = 10;
 			table.RowSpacing = 2;
 			frame.Add(table);
@@ -123,11 +174,16 @@ namespace MfGames.Wordplay
 				e.Score.Xalign = 1;
 
 				// Add the name
-				table.Attach(e.Name,
-					0, 1, row, row + 1,
+				table.Attach(
+					e.Name,
+					0,
+					1,
+					row,
+					row + 1,
 					AttachOptions.Fill | AttachOptions.Expand,
 					AttachOptions.Fill | AttachOptions.Expand,
-					0, 0);
+					0,
+					0);
 
 				/*
 				// Add the time
@@ -138,17 +194,20 @@ namespace MfGames.Wordplay
 				*/
 
 				// Add the word
-				table.Attach(e.Word,
-					1, 2, row, row + 1,
+				table.Attach(
+					e.Word,
+					1,
+					2,
+					row,
+					row + 1,
 					AttachOptions.Fill | AttachOptions.Expand,
 					AttachOptions.Fill | AttachOptions.Expand,
-					0, 0);
+					0,
+					0);
 
 				// Add the score
-				table.Attach(e.Score,
-					2, 3, row, row + 1,
-					AttachOptions.Fill, AttachOptions.Fill,
-					0, 0);
+				table.Attach(
+					e.Score, 2, 3, row, row + 1, AttachOptions.Fill, AttachOptions.Fill, 0, 0);
 			}
 
 			// Return the frame
@@ -158,7 +217,9 @@ namespace MfGames.Wordplay
 		/// <summary>
 		// Closes this window.
 		/// </summary>
-		private void OnClose(object sender, EventArgs args)
+		private void OnClose(
+			object sender,
+			EventArgs args)
 		{
 			Destroy();
 		}
@@ -166,7 +227,9 @@ namespace MfGames.Wordplay
 		/// <summary>
 		/// Triggers an update of the entries.
 		/// </summary>
-		private void OnTableChanged(object sender, EventArgs args)
+		private void OnTableChanged(
+			object sender,
+			EventArgs args)
 		{
 			// Go through the list
 			foreach (HighScoreTable hst in Game.HighScores.Tables)
@@ -191,7 +254,9 @@ namespace MfGames.Wordplay
 		/// <summary>
 		/// Populates the list entries.
 		/// </summary>
-		private void PopulateLists(int offset, IList <HighScoreEntry> list)
+		private void PopulateLists(
+			int offset,
+			IList<HighScoreEntry> list)
 		{
 			// Sort it
 			list.Sort();
@@ -209,10 +274,10 @@ namespace MfGames.Wordplay
 				}
 
 				// Populate the list
-				entries[n].Name.Text    = list[i].Name;
+				entries[n].Name.Text = list[i].Name;
 				entries[n].UtcWhen.Text = list[i].UtcWhen.ToString();
-				entries[n].Word.Text    = list[i].Word + "";
-				entries[n].Score.Text   = list[i].Score.ToString("N0");
+				entries[n].Word.Text = list[i].Word + "";
+				entries[n].Score.Text = list[i].Score.ToString("N0");
 			}
 		}
 	}
@@ -223,16 +288,16 @@ namespace MfGames.Wordplay
 	internal class HighScoreWindowEntry
 	{
 		public Label Name = new Label("");
+		public Label Score = new Label();
 		public Label UtcWhen = new Label();
 		public Label Word = new Label();
-		public Label Score = new Label();
 
 		public void Reset()
 		{
-			Name.Text    = "";
+			Name.Text = "";
 			UtcWhen.Text = "";
-			Word.Text    = "";
-			Score.Text   = "";
+			Word.Text = "";
+			Score.Text = "";
 		}
 	}
 }

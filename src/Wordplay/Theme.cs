@@ -1,8 +1,36 @@
-using C5;
-using Gdk;
-using MfGames.Sprite;
-using Rsvg;
+#region Copyright and License
+
+// Copyright (c) 2009-2011, Moonfire Games
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
+#endregion
+
+#region Namespaces
+
 using System.IO;
+
+using C5;
+
+using MfGames.Sprite;
+
+#endregion
 
 namespace MfGames.Wordplay
 {
@@ -13,10 +41,9 @@ namespace MfGames.Wordplay
 	/// </summary>
 	public class Theme
 	{
-		private string themeName;
 		private DirectoryInfo directory;
-		private TilesetDrawableFactory tilesetFactory =
-			new TilesetDrawableFactory();
+		private string themeName;
+		private TilesetDrawableFactory tilesetFactory = new TilesetDrawableFactory();
 
 		/// <summary>
 		/// Creates the theme with the given theme name.
@@ -25,17 +52,18 @@ namespace MfGames.Wordplay
 		{
 			// Populate our internal values
 			this.themeName = themeName;
-			this.directory = new DirectoryInfo(
-				Path.Combine(ThemeDirectory, this.themeName));
+			directory = new DirectoryInfo(Path.Combine(ThemeDirectory, this.themeName));
 
 			// Do some sanity checking
 			if (!directory.Exists)
-				throw new WordplayException("Theme directory does not exist: "
-					+ directory.FullName);
+			{
+				throw new WordplayException(
+					"Theme directory does not exist: " + directory.FullName);
+			}
 
 			// Load in the tileset
-			FileInfo tilesetFile = new FileInfo(
-				Path.Combine(directory.FullName, "tileset.xml"));
+			FileInfo tilesetFile =
+				new FileInfo(Path.Combine(directory.FullName, "tileset.xml"));
 			tilesetFactory.Load(tilesetFile);
 
 			// Noise
@@ -59,17 +87,20 @@ namespace MfGames.Wordplay
 			set { themeName = value; }
 		}
 
-#region Constants
+		#region Constants
+
 		// Used to identify the graphic to use when the Game.State is
 		// GameState.NotStarted.
-		public static readonly string NotStarted = "not-started";
 
 		// Used to identify the graphic used when the game is over
 		// (also known as GameState.Completed).
 		public static readonly string Completed = "completed";
-#endregion
+		public static readonly string NotStarted = "not-started";
 
-#region Theme
+		#endregion
+
+		#region Theme
+
 		/// <summary>
 		/// Contains the name of the theme directory.
 		/// </summary>
@@ -81,10 +112,10 @@ namespace MfGames.Wordplay
 		/// <summary>
 		/// Returns all themes in the given directory.
 		/// </summary>
-		public static IList <Theme> GetThemes()
+		public static IList<Theme> GetThemes()
 		{
 			// Create the list
-			LinkedList <Theme> list = new LinkedList <Theme> ();
+			LinkedList<Theme> list = new LinkedList<Theme>();
 
 			// Go through the directories
 			foreach (string din
@@ -92,7 +123,9 @@ namespace MfGames.Wordplay
 			{
 				// Check for the theme.xml file
 				if (!File.Exists(Path.Combine(din, "tileset.xml")))
+				{
 					continue;
+				}
 
 				// We have a theme
 				DirectoryInfo di = new DirectoryInfo(din);
@@ -103,6 +136,7 @@ namespace MfGames.Wordplay
 			// Return the results
 			return list;
 		}
-#endregion
+
+		#endregion
 	}
 }
