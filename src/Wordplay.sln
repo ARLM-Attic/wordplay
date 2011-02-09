@@ -5,6 +5,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wordplay", "Wordplay\Wordpl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MfGames.GtkSprite", "MfGames.GtkSprite\MfGames.GtkSprite.csproj", "{F09F468B-37DD-4CE0-9895-C5FFD731A004}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpriteDemo", "SpriteDemo\SpriteDemo.csproj", "{BEEEBC26-2DD9-43B9-B268-9FF34936DD32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpriteViewer", "SpriteViewer\SpriteViewer.csproj", "{EBB0A919-787B-4DF0-A443-C1DB3CB7F62C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +23,14 @@ Global
 		{F09F468B-37DD-4CE0-9895-C5FFD731A004}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F09F468B-37DD-4CE0-9895-C5FFD731A004}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F09F468B-37DD-4CE0-9895-C5FFD731A004}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEEEBC26-2DD9-43B9-B268-9FF34936DD32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEEEBC26-2DD9-43B9-B268-9FF34936DD32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEEEBC26-2DD9-43B9-B268-9FF34936DD32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEEEBC26-2DD9-43B9-B268-9FF34936DD32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBB0A919-787B-4DF0-A443-C1DB3CB7F62C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBB0A919-787B-4DF0-A443-C1DB3CB7F62C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBB0A919-787B-4DF0-A443-C1DB3CB7F62C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBB0A919-787B-4DF0-A443-C1DB3CB7F62C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
