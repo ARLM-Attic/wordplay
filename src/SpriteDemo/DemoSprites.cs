@@ -2,7 +2,6 @@ using C5;
 using Gdk;
 using Gtk;
 using MfGames.Sprite;
-using MfGames.Utility;
 using System;
 using System.IO;
 using System.Reflection;
@@ -103,9 +102,6 @@ public class DemoSprites
 			
 			if (ci == null)
 			{
-				Logger.Error(typeof(DemoSprites),
-					"{0}: Has no default constructor",
-					type);
 				continue;
 			}
 			
@@ -114,13 +110,10 @@ public class DemoSprites
 			
 			if (dsp == null)
 			{
-				Logger.Error(typeof(DemoSprites),
-					"{0}: Cannot create DemoSpritePane", type);
 				continue;
 			}
 			
 			// Register it
-			Logger.Info(typeof(DemoSprites), "Registered {0}", type);
 			panes.Add(dsp);
 			paneList.AppendText(dsp.Name);
 		}

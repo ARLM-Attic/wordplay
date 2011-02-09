@@ -1,7 +1,6 @@
 using C5;
 using Gdk;
 using MfGames.Sprite;
-using MfGames.Utility;
 using Rsvg;
 using System.IO;
 
@@ -13,7 +12,6 @@ namespace MfGames.Wordplay
 	/// it just identifies the locations and streams needed to do so.
 	/// </summary>
 	public class Theme
-	: Logable
 	{
 		private string themeName;
 		private DirectoryInfo directory;

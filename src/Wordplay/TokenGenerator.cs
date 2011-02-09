@@ -1,5 +1,4 @@
 using C5;
-using MfGames.Utility;
 
 namespace MfGames.Wordplay
 {
@@ -9,7 +8,6 @@ namespace MfGames.Wordplay
 	/// values are reduced close to "near random".
 	/// </summary>
 	public class TokenGenerator
-	: Logable
 	{
 		private WeightedSelector types = new WeightedSelector();
 

@@ -1,7 +1,8 @@
+using System;
+
 using Gdk;
 using Gtk;
 using MfGames.Sprite;
-using MfGames.Utility;
 
 /// <summary>
 /// A bounce demostration sprite pane that just shows various elements

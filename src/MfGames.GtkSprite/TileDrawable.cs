@@ -12,6 +12,8 @@ namespace MfGames.Sprite
 	public class TileDrawable
 	: IDrawable
 	{
+		private static Random random = new Random();
+
 		/// <summary>
 		/// Constructs the tile drawable object.
 		/// </summary>
@@ -103,7 +105,7 @@ namespace MfGames.Sprite
 			while (true)
 			{
 				// Pick one
-				int seq = Entropy.Next(0, tile.Count - 1);
+				int seq = random.Next(0, tile.Count - 1);
 				TileFrame frame = tile.Frames[seq];
 
 				if (frame.Random)
@@ -114,7 +116,7 @@ namespace MfGames.Sprite
 					state.Frame = seq;
 					state.LastUpdate =
 						DateTime.UtcNow.Ticks / 10000 +
-						Entropy.Next(0, frame.Delay);
+						random.Next(0, frame.Delay);
 					return;
 				}
 			}

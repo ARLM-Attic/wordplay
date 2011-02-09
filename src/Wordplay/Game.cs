@@ -1,4 +1,3 @@
-using MfGames.Utility;
 using System;
 using System.IO;
 using System.Xml.Serialization;
@@ -10,7 +9,6 @@ namespace MfGames.Wordplay
 	/// is also the class that is used to serialize the game.
 	/// </summary>
 	public class Game
-	: Logable
 	{
 #region Persistence
 		/// <summary>

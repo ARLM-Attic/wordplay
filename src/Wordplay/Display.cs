@@ -2,7 +2,6 @@ using C5;
 using Gdk;
 using Gtk;
 using MfGames.Sprite;
-using MfGames.Utility;
 using System;
 
 namespace MfGames.Wordplay
@@ -13,7 +12,6 @@ namespace MfGames.Wordplay
 	public class Display
 	: DrawingArea
 	{
-		private Log log = new Log(typeof(Display));
 		private SpriteViewport viewport;
 		private Pixmap pixmap;
 		private int exposeCount;

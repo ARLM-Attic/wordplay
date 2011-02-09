@@ -1,7 +1,6 @@
 using Gdk;
 using Gtk;
 using MfGames.Sprite;
-using MfGames.Utility;
 
 /// <summary>
 /// This demostration explores the handle of a tileset loading and

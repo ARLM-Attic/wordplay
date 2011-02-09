@@ -1,5 +1,4 @@
 using C5;
-using MfGames.Utility;
 using System;
 using System.Text;
 
@@ -10,7 +9,6 @@ namespace MfGames.Wordplay
 	/// non-graphical elements of the board.
 	/// </summary>
 	public class Board
-	: Logable
 	{
 		/// <summary>
 		/// Constructs the board.

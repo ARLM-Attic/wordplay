@@ -1,5 +1,4 @@
 using C5;
-using MfGames.Utility;
 using NetSpell.SpellChecker.Dictionary;
 using System;
 using System.IO;
@@ -11,7 +10,6 @@ namespace MfGames.Wordplay
 	/// Encapsulates the entire functionality of a language.
 	/// </summary>
 	public class Language
-	: Logable
 	{
 		private WeightedSelector frequencies = new WeightedSelector();
 		private HashDictionary <char, int> scores =

@@ -52,9 +52,8 @@ namespace MfGames.Sprite
 			{
 				frame = tile.Frames[seq];
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
-				Error("Cannot get frame " + seq + " from " + tile.ID);
 				return;
 			}
 
@@ -85,9 +84,6 @@ namespace MfGames.Sprite
 			Tile t = new Tile();
 			t.ID = xtr["id"];
 			t.File = new FileInfo(Path.Combine(baseDir.FullName, xtr["file"]));
-
-			if (!t.File.Exists)
-				Error("{0}: Tile file does not exist", t.File);
 
 			// Try to read in the rest of the optional elements
 			try

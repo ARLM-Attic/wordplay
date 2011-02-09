@@ -80,9 +80,6 @@ namespace MfGames.Sprite
 			// Go through the tiles
 			foreach (Tile tile in tileset.Tiles)
 				tiles[tile.ID] = tile;
-
-			// Make some noise
-			Info("Loaded {0} tile(s)", tileset.Tiles.Count);
 		}
 #endregion
 	}

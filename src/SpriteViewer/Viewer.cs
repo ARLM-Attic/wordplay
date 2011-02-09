@@ -2,7 +2,6 @@ using C5;
 using Gdk;
 using Gtk;
 using MfGames.Sprite;
-using MfGames.Utility;
 using System;
 using System.IO;
 using System.Reflection;

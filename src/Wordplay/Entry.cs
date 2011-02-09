@@ -1,8 +1,4 @@
 using Gtk;
-using MfGames.Log4net;
-using MfGames.Utility;
-using log4net.Config;
-using log4net;
 
 namespace MfGames.Wordplay
 {
@@ -20,10 +16,6 @@ namespace MfGames.Wordplay
 		/// </summary>
 		public static void Main(string [] args)
 		{
-			// Set up logging first
-			XmlConfigurator.Configure();
-			Logger.Singleton = new Log4netLogger();
-
 			// Set up config storage
 			ConfigStorage.Singleton = new ConfigStorage("MfGames");
 			ConfigStorage.Singleton.InitStorage();

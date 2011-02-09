@@ -1,3 +1,5 @@
+using System;
+
 using Gdk;
 
 /// <summary>
@@ -7,6 +9,10 @@ using Gdk;
 /// </summary>
 public abstract class DemoSpritePane
 {
+	private static Random random = new Random();
+
+	protected static Random Entropy { get { return random; } }
+	
 	/// <summary>
 	/// Contains the name of the pane (for the drop-down list).
 	/// </summary>

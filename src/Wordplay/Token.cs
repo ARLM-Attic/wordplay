@@ -1,4 +1,3 @@
-using MfGames.Utility;
 using System;
 
 namespace MfGames.Wordplay
@@ -7,7 +6,6 @@ namespace MfGames.Wordplay
 	/// Contains the value of a single token in play.
 	/// </summary>
 	public class Token
-	: Logable
 	{
 		private static uint nextId = 0;
 		private uint id;

@@ -1,4 +1,3 @@
-using MfGames.Utility;
 using System.Resources;
 
 namespace MfGames.Wordplay
@@ -8,7 +7,6 @@ namespace MfGames.Wordplay
 	/// globalization elements of the them.
 	/// </summary>
 	public class Locale
-	: Logable
 	{
 		private static ResourceManager manager;
 

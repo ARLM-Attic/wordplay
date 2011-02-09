@@ -1,7 +1,6 @@
 using Gdk;
 using Gtk;
 using MfGames.Sprite;
-using MfGames.Utility;
 using System;
 
 /// <summary>

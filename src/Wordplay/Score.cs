@@ -1,5 +1,4 @@
 using C5;
-using MfGames.Utility;
 using System.Text;
 
 namespace MfGames.Wordplay
@@ -9,7 +8,6 @@ namespace MfGames.Wordplay
 	/// scores and also handling the scoring subsystem.
 	/// </summary>
 	public class Score
-	: Logable
 	{
 #region Score
 		private int score;

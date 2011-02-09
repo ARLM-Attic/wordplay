@@ -1,12 +1,9 @@
-using MfGames.Utility;
-
 namespace MfGames.Wordplay
 {
 	/// <summary>
 	/// Controls the user-configurable options for the game.
 	/// </summary>
 	public class Config
-	: Logable
 	{
 		private int boardSize = 7;
 		private string theme = "default";
