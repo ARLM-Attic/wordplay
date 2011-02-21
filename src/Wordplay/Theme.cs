@@ -65,9 +65,6 @@ namespace MfGames.Wordplay
 			FileInfo tilesetFile =
 				new FileInfo(Path.Combine(directory.FullName, "tileset.xml"));
 			tilesetFactory.Load(tilesetFile);
-
-			// Noise
-			Debug("Loaded theme: {0}", themeName);
 		}
 
 		/// <summary>

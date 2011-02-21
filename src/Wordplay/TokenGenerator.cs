@@ -22,6 +22,8 @@
 
 #endregion
 
+using MfGames.Collections;
+
 namespace MfGames.Wordplay
 {
 	/// <summary>
@@ -31,7 +33,7 @@ namespace MfGames.Wordplay
 	/// </summary>
 	public class TokenGenerator
 	{
-		private readonly WeightedSelector types = new WeightedSelector();
+		private readonly WeightedSelector<TokenType> types = new WeightedSelector<TokenType>();
 
 		/// <summary>
 		/// Constructs the token generator and sets up the various
@@ -58,7 +60,7 @@ namespace MfGames.Wordplay
 			int column)
 		{
 			// Generate the values
-			TokenType type = (TokenType) types.RandomObject;
+			TokenType type = (TokenType) types.GetRandomItem();
 			char value = Game.Language.CreateValue();
 
 			// Make sure we aren't near the bottom (that is being

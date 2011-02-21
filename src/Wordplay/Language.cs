@@ -30,6 +30,10 @@ using System.Xml;
 
 using C5;
 
+using MfGames.Collections;
+using MfGames.Enumerations;
+using MfGames.Logging;
+
 using NetSpell.SpellChecker.Dictionary;
 
 #endregion
@@ -41,7 +45,7 @@ namespace MfGames.Wordplay
 	/// </summary>
 	public class Language
 	{
-		private readonly WeightedSelector frequencies = new WeightedSelector();
+		private readonly WeightedSelector<char> frequencies = new WeightedSelector<char>();
 
 		private readonly HashDictionary<char, int> scores =
 			new HashDictionary<char, int>();
@@ -69,7 +73,7 @@ namespace MfGames.Wordplay
 		/// </summary>
 		public char CreateValue()
 		{
-			char c = (char) frequencies.RandomObject;
+			char c = (char) frequencies.GetRandomItem();
 
 			if (frequencies[c] > 1)
 			{
@@ -144,7 +148,10 @@ namespace MfGames.Wordplay
 			catch (Exception e)
 			{
 				// Make an error message
-				Error("Cannot load language: {0}", name);
+				LogManager.Report(
+					this,
+					new LogEvent(
+						"Language", Severity.Error, null, "Cannot load language: {0}", name));
 
 				// Try to load it
 				if (name != "en-US")

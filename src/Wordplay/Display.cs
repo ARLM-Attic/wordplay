@@ -32,6 +32,7 @@ using Gdk;
 
 using Gtk;
 
+using MfGames.Logging;
 using MfGames.Sprite;
 
 using GC=Gdk.GC;
@@ -77,6 +78,8 @@ namespace MfGames.Wordplay
 
 			// Set up the animation timer
 			Timeout.Add(1000 / Game.Config.FramesPerSecond, OnTick);
+
+			log = new Log();
 		}
 
 		#region Board Events
@@ -323,6 +326,7 @@ namespace MfGames.Wordplay
 
 		// Contains the last state
 		private GameState lastState = GameState.Unknown;
+		private Log log;
 
 		/// <summary>
 		/// Triggered when the button is pressed.
@@ -393,7 +397,7 @@ namespace MfGames.Wordplay
 
 			// Figure out the tile height
 			tileSize = min / Game.Board.Size;
-			Logger.Info(typeof(Display), "New tile size: {0}px", tileSize);
+			log.Info("New tile size: {0}px", tileSize);
 
 			// Adjust the viewport height
 			viewport.Height = height;

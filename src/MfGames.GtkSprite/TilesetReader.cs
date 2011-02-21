@@ -93,28 +93,19 @@ namespace MfGames.Sprite
 			}
 
 			// Try to read in the rest of the optional elements
-			try
+			if (!String.IsNullOrEmpty(xtr["delay-ms"]))
 			{
 				frame.Delay = Int32.Parse(xtr["delay-ms"]);
 			}
-			catch
-			{
-			}
 
-			try
+			if (!String.IsNullOrEmpty(xtr["next-frame"]))
 			{
 				frame.NextFrame = Int32.Parse(xtr["next-frame"]);
 			}
-			catch
-			{
-			}
 
-			try
+			if (!String.IsNullOrEmpty(xtr["random"]))
 			{
 				frame.Random = Boolean.Parse(xtr["random"]);
-			}
-			catch
-			{
 			}
 		}
 
@@ -131,28 +122,19 @@ namespace MfGames.Sprite
 			t.File = new FileInfo(Path.Combine(baseDir.FullName, xtr["file"]));
 
 			// Try to read in the rest of the optional elements
-			try
+			if (!String.IsNullOrEmpty(xtr["columns"]))
 			{
 				t.Columns = t.Count = Int32.Parse(xtr["columns"]);
 			}
-			catch
-			{
-			}
 
-			try
+			if (!String.IsNullOrEmpty(xtr["count"]))
 			{
 				t.Count = Int32.Parse(xtr["count"]);
 			}
-			catch
-			{
-			}
 
-			try
+			if (!String.IsNullOrEmpty(xtr["delay-ms"]))
 			{
 				t.Delay = Int32.Parse(xtr["delay-ms"]);
-			}
-			catch
-			{
 			}
 
 			// Check for empty

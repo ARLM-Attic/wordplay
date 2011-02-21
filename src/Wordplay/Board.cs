@@ -29,6 +29,8 @@ using System.Text;
 
 using C5;
 
+using MfGames.Logging;
+
 #endregion
 
 namespace MfGames.Wordplay
@@ -45,6 +47,7 @@ namespace MfGames.Wordplay
 		public Board(int size)
 		{
 			this.size = size;
+			log = new Log();
 		}
 
 		/// <summary>
@@ -57,7 +60,7 @@ namespace MfGames.Wordplay
 
 			if (tokens.Count != Rows * Columns)
 			{
-				Error(
+				log.Error(
 					"Unexpected number of tokens: {0} instead of {1}",
 					tokens.Count,
 					Rows * Columns);
@@ -72,25 +75,25 @@ namespace MfGames.Wordplay
 				// Check for out of bounds
 				if (token.Row < 0)
 				{
-					Error("{0}: Row is below zero: {1}", token, token.Row);
+					log.Error("{0}: Row is below zero: {1}", token, token.Row);
 					errors = true;
 				}
 
 				if (token.Column < 0)
 				{
-					Error("{0}: Column is below zero: {1}", token, token.Column);
+					log.Error("{0}: Column is below zero: {1}", token, token.Column);
 					errors = true;
 				}
 
 				if (token.Row >= Rows)
 				{
-					Error("{0}: Row is too high: {1}", token, token.Row);
+					log.Error("{0}: Row is too high: {1}", token, token.Row);
 					errors = true;
 				}
 
 				if (token.Column >= Columns)
 				{
-					Error("{0}: Column is too high: {1}", token, token.Column);
+					log.Error("{0}: Column is too high: {1}", token, token.Column);
 					errors = true;
 				}
 
@@ -99,7 +102,7 @@ namespace MfGames.Wordplay
 
 				if (hash.Contains(ndx))
 				{
-					Error("{0}: Duplicate location: {1}", token, ndx);
+					log.Error("{0}: Duplicate location: {1}", token, ndx);
 					errors = true;
 				}
 
@@ -138,7 +141,7 @@ namespace MfGames.Wordplay
 				// without duplicates. We do this by basically finding
 				// another random one and moving it (even if it is
 				// blank).
-				Token t1 = tokens[Entropy.Next(0, count)];
+				Token t1 = tokens[RandomManager.Random.Next(0, count)];
 
 				// Make sure this wouldn't put a burning tile on the
 				// bottom row. This will move burning tiles up, if needed.
@@ -171,7 +174,7 @@ namespace MfGames.Wordplay
 			for (int i = 0; i < resetCount; i++)
 			{
 				// Set to burning
-				Token nb = GetToken(Entropy.Next(0, Rows - 2), Entropy.Next(0, Columns - 1));
+				Token nb = GetToken(RandomManager.Random.Next(0, Rows - 2), RandomManager.Random.Next(0, Columns - 1));
 				nb.Type = TokenType.Burning;
 				OnTokenChanged(nb);
 			}
@@ -222,7 +225,7 @@ namespace MfGames.Wordplay
 					if (token.Row == Rows - 1)
 					{
 						// End of Game
-						Error("End of Game!");
+						log.Error("End of Game!");
 						Game.State = GameState.Completed;
 					}
 					else
@@ -364,7 +367,7 @@ namespace MfGames.Wordplay
 						continue;
 					}
 
-					Debug("Moving {0} to {1}", above, row);
+					log.Debug("Moving {0} to {1}", above, row);
 
 					// Reset the position
 					above.Row = row;
@@ -692,6 +695,7 @@ namespace MfGames.Wordplay
 		#region Tokens
 
 		private ArrayList<Token> tokens = null;
+		private Log log;
 
 		/// <summary>
 		/// Contains a read-only list of tokens.

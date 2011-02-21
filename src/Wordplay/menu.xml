@@ -1,0 +1,11 @@
+﻿<ui>
+	<menubar name='MenuBar'>
+		<menu action='GameMenu'>
+			<menuitem action='NewGame'/>
+			<menuitem action='ShuffleBoard'/>
+			<menuitem action='Preferences'/>
+			<menuitem action='HighScores'/>
+			<menuitem action='Quit'/>
+		</menu>
+	</menubar>
+</ui>

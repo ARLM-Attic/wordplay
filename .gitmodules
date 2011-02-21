@@ -1,0 +1,6 @@
+[submodule "ext/mfgames-gtkext-cil"]
+	path = ext/mfgames-gtkext-cil
+	url = git://github.com/dmoonfire/mfgames-gtkext-cil.git
+[submodule "ext/mfgames-cil"]
+	path = ext/mfgames-cil
+	url = git://github.com/dmoonfire/mfgames-cil.git

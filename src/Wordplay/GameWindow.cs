@@ -209,7 +209,7 @@ namespace MfGames.Wordplay
 		{
 			// Start by loading the UI from a resource
 			UIManager ui = new UIManager();
-			ui.AddUiFromResource("menu.xml");
+			ui.AddUiFromResource("Wordplay.menu.xml");
 
 			// Set up the actions
 			ActionEntry[] entries = new[]

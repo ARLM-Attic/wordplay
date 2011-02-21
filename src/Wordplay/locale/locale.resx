@@ -1,0 +1,66 @@
+﻿<?xml version="1.0"?>
+<root>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+
+	<!-- Contains the menu translations -->
+	<data name="Menu/Game">
+		<value>_Game</value>
+	</data>
+	<data name="Menu/NewGame">
+		<value>_New Game</value>
+	</data>
+	<data name="Menu/ShuffleBoard">
+		<value>_Shuffle Board</value>
+	</data>
+	<data name="Menu/Preferences">
+		<value>_Preferences</value>
+	</data>
+	<data name="Menu/Quit">
+		<value>_Quit</value>
+	</data>
+	<data name="Menu/HighScores">
+		<value>_High Scores</value>
+	</data>
+
+	<!-- Contains the scoring pane stuff -->
+	<data name="Score/TotalScore">
+		<value>Total Score</value>
+	</data>
+	<data name="Score/CurrentWord">
+		<value>Current Word</value>
+	</data>
+	<data name="Score/HighestWord">
+		<value>Highest Word</value>
+	</data>
+	<data name="Score/LongestWord">
+		<value>Longest Word</value>
+	</data>
+	<data name="Score/TotalWords">
+		<value>Total Words</value>
+	</data>
+	<data name="Score/Submit">
+		<value>Submit</value>
+	</data>
+
+	<data name="Score/InHighScore">
+		<value>
+			You have gotten on the high score,
+			please enter your name.
+		</value>
+	</data>
+
+	<data name="Score/None">
+		<value>None</value>
+	</data>
+</root>

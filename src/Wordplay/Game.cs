@@ -28,6 +28,8 @@ using System;
 using System.IO;
 using System.Xml.Serialization;
 
+using MfGames.Logging;
+
 #endregion
 
 namespace MfGames.Wordplay
@@ -38,6 +40,8 @@ namespace MfGames.Wordplay
 	/// </summary>
 	public class Game
 	{
+		private static Log log = new Log(typeof(Game));
+
 		#region Persistence
 
 		/// <summary>
@@ -47,7 +51,7 @@ namespace MfGames.Wordplay
 		{
 			get
 			{
-				DirectoryInfo dir = ConfigStorage.Singleton.GetDirectory("Wordplay");
+				DirectoryInfo dir = ConfigStorage.GetDirectoryInfo("MfGames", "Wordplay");
 				return Path.Combine(dir.FullName, "config.xml");
 			}
 		}
@@ -125,7 +129,7 @@ namespace MfGames.Wordplay
 			}
 			catch (Exception e)
 			{
-				Logger.Error(typeof(Game), "Cannot write config: {0}", e.Message);
+				log.Error("Cannot write config: {0}", e.Message);
 			}
 
 			// Write out our high scores
@@ -141,7 +145,7 @@ namespace MfGames.Wordplay
 			}
 			catch (Exception e)
 			{
-				Logger.Error(typeof(Game), "Cannot write high scores: {0}", e.Message);
+				log.Error("Cannot write high scores: {0}", e.Message);
 			}
 		}
 

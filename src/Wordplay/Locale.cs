@@ -61,6 +61,8 @@ namespace MfGames.Wordplay
 		/// </summary>
 		public static string Translate(string key)
 		{
+			return key;
+			/*
 			string value = Resources.GetString(key);
 
 			if (value == null)
@@ -71,6 +73,7 @@ namespace MfGames.Wordplay
 			{
 				return value;
 			}
+			*/
 		}
 	}
 }

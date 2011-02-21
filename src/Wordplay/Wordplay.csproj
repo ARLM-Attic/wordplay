@@ -78,6 +78,11 @@
     <Compile Include="HighScoreWindow.cs" />
     <Compile Include="Language.cs" />
     <Compile Include="Locale.cs" />
+    <Compile Include="locale\locale.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>locale.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Score.cs" />
     <Compile Include="SelectionType.cs" />
@@ -91,10 +96,26 @@
     <Compile Include="WordplayException.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ext\mfgames-cil\src\MfGames\MfGames.csproj">
+      <Project>{3BABBE73-CD1D-494E-A81F-E4EA40107FA9}</Project>
+      <Name>MfGames</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ext\mfgames-gtkext-cil\src\MfGames.GtkExt\MfGames.GtkExt.csproj">
+      <Project>{DC4BE5FB-0A89-4210-BC19-B4D01E5D901F}</Project>
+      <Name>MfGames.GtkExt</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MfGames.GtkSprite\MfGames.GtkSprite.csproj">
       <Project>{F09F468B-37DD-4CE0-9895-C5FFD731A004}</Project>
       <Name>MfGames.GtkSprite</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="locale\locale.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>locale.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="menu.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

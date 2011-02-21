@@ -45,8 +45,6 @@ namespace MfGames.Wordplay
 		public static void Main(string[] args)
 		{
 			// Set up config storage
-			ConfigStorage.Singleton = new ConfigStorage("MfGames");
-			ConfigStorage.Singleton.InitStorage();
 			Game.LoadConfig();
 
 			// Set up the Gtk and our structures

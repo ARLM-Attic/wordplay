@@ -28,6 +28,8 @@ using System;
 
 using Gtk;
 
+using MfGames.GtkExt;
+
 #endregion
 
 namespace MfGames.Wordplay
