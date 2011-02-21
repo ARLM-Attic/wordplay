@@ -1,2 +1,8 @@
+*.userprefs
+*.user
+*.pidb
+*.suo
+
 bin
-*.resources
+obj
+test-results
